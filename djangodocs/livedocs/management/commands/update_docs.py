@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 from optparse import make_option
-import shutil
+from django.db import connections
 import os
 import subprocess
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from settings import ROOT_PATH
 import lxml.html
+from lxml import etree
+from pyquery import PyQuery as pq
 from livedocs.models import Item
 from livedocs.models import Version
-from settings import STATIC_ROOT
 
 
 class Command(BaseCommand):
@@ -45,34 +46,31 @@ class Command(BaseCommand):
     version = None
 
     def handle(self, *args, **options):
-        self.import_images()
-#        if not 'ver' in options or not options['ver']:
-#            raise CommandError('Enter version')
-#
-#        try:
-#            self.version = Version.objects.get(name=options['ver'])
-#        except Version.DoesNotExist:
-#            self.version = None
-#
-#        if options['delete']:
-#            if self.version:
-#                self.delete_version()
-#            else:
-#                raise CommandError('You are delete non exists version')
-#        else:
-#            if self.version:
-#                self.delete_version()
-#            else:
-#                self.version = Version(name=options['ver'], is_default=options['default'])
-#                self.version.save()
-#
+        if not 'ver' in options or not options['ver']:
+            raise CommandError('Enter version')
+
+        try:
+            self.version = Version.objects.get(name=options['ver'])
+        except Version.DoesNotExist:
+            self.version = None
+
+        if options['delete']:
+            if self.version:
+                self.delete_version()
+            else:
+                raise CommandError('You are delete non exists version')
+        else:
+            if self.version:
+                self.delete_version()
+            else:
+                self.version = Version(name=options['ver'], is_default=options['default'])
+                self.version.save()
+
 #            if not options['only_parse']:
 #                self._download_docs()
 #                self._make_html()
-#
-#        with transaction.commit_on_success():
-#            self._parse_html_and_update_db()
-#            self.create_paths()
+            self._parse_html_and_update_db()
+            self.create_paths()
 
     def delete_version(self):
         print 'Deleting version {0} ...'.format(self.version.name)
@@ -107,30 +105,27 @@ class Command(BaseCommand):
 
 
     def parse_section(self, parent_element, parent_section=None):
-        """ Parsing section"""
+        """ Parsing section """
             
         section = Item(version=self.version)
         section.content = ''
         if parent_section:
             section.parent = parent_section
 
+        subitems = []
+
         # Iterating over child nodes
         for children_element in parent_element:
                 
             # Do we have any subsections?
             children_element_classes = set(children_element.attrib.get('class', '').split(' '))
+            
             if self.SUB_ITEMS_CLASSES & children_element_classes:
-                
-                # Saving current section
-                section.save()
-                # Parsing child element
-#                if 'toctree-wrapper' in children_element_classes:
-#                    self.parse_section(children_element, parent_section)
-#                else:
-                self.parse_section(children_element, section)
+
+                subitems.append(children_element)
 
             else:
-                
+
                 # Filling section
                 if children_element.tag in self.HEADER_TAGS:
                     section.title = children_element.text or ''
@@ -138,15 +133,22 @@ class Command(BaseCommand):
                     section.slug = children_element.attrib['id']
                 else:
                     section.content += lxml.html.tostring(children_element)
-                    
-        section.save()
 
+        is_section_empty = not section.title
 
-    def import_images(self):
-        """Copy images to static root"""
-        SRC = os.path.join(ROOT_PATH, 'data/_build/singlehtml/_images')
-        DST = os.path.join(STATIC_ROOT, '_images')
-        shutil.copytree(SRC, DST)
+        if not is_section_empty or not parent_section:
+            section.save()
+
+        for item in subitems:
+            if is_section_empty:
+                if parent_section:
+                    parent_for_item = parent_section
+                else:
+                    parent_for_item = section
+            else:
+                parent_for_item = section
+            self.parse_section(item, parent_for_item)
+
 
     def create_paths(self):
         """Filling site paths at once"""

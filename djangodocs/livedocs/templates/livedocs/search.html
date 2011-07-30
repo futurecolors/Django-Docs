@@ -1,12 +1,12 @@
 {% extends 'livedocs/layout/layout.html' %}
 
 {% block results %}
+    {% if found_count %}
     <h1 class="b-results__header">
         Search results
-        {% if found_count %}
         ({{ found_count }})
-        {% endif %}
     </h1>
+    {% endif %}
 
     <nav class="b-results__nav">
         {% for item in items %}
