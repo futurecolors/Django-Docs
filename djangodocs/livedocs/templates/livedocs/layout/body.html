@@ -1,3 +1,5 @@
+{% load compress %}
+
 <!doctype html>
 <!--[if lt IE 7 ]><html class="ie6 ie67 ie no-js" lang="ru"><![endif]-->
 <!--[if IE 7 ]>   <html class="ie7 ie67 ie no-js" lang="ru"><![endif]-->
@@ -10,10 +12,16 @@
 
     <title>{% block title %}Django Docs{% endblock %}</title>
 
+    {% compress css %}
     <link rel="stylesheet" href="{{STATIC_URL}}css/reset.css" type="text/css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/common.css" type="text/css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/typo.css" type="text/css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/header.css" type="text/css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/search-form.css" type="text/css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/version.css" type="text/css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/search-results.css" type="text/css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/contents.css" type="text/css">
+    {% endcompress %}
 </head>
 <body class="{% block bodyclass %}{% endblock %}">
     {% block layout %}{% endblock %}

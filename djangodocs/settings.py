@@ -79,12 +79,14 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+STATIC_ROOT = os.path.join(ROOT_PATH, '_static')
+
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -115,6 +117,8 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'livedocs',
+    
+    'compressor',
 
     'django.contrib.auth',
     'django.contrib.contenttypes',

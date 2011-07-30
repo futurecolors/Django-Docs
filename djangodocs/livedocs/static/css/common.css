@@ -5,6 +5,11 @@
  * @version     1.0
  * @author      Artem Golikov <art@futurecolors.ru>
  * @copyright   Future Colors
+ *
+ * @colordef    #333        Text
+ * @colordef    #0d35e1     Links
+ * @colordef    #5517e0     Visited links
+ * @colordef    #ca2447     Hover links
  */
 
 
@@ -16,4 +21,34 @@ body {
     font-family: Tahoma;
     font-size: 62.5%;
     color: #333;
+}
+.b-teaser {
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    width: 100%;
+    margin-top: -0.5em;
+    text-align: center;
+    font-size: 300%;
+}
+
+
+/**
+ * @subsection  Link styles
+ */
+
+a {
+    color: #0d35e1;
+}
+a:visited {
+    color: #5517e0;
+}
+a:active,
+a:hover {
+    color: #ca2447;
+}
+.g-systemlink:visited,
+.g-systemlink:active,
+.g-systemlink:hover {
+    color: #0d35e1;
 }
