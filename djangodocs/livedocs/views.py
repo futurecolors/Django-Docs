@@ -38,8 +38,10 @@ class SearchView(BaseLiveView):
 
         if context['query']:
             context['items'] = Item.objects.filter(Q(version__name=context['current_version']),
-                                        Q(title__icontains=context['query']) | Q(content__icontains=context['query']))
+                                Q(title__icontains=context['query']) | Q(content__icontains=context['query']))[:10]
             context['found_count'] = context['items'].count()
+            if context['found_count']:
+                context['item'] = context['items'][0]
 
         return context
 

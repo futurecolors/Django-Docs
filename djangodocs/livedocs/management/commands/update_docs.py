@@ -73,7 +73,7 @@ class Command(BaseCommand):
             self.create_paths()
 
     def delete_version(self):
-        print 'Delete version {0} ...'.format(self.version.name)
+        print 'Deleting version {0} ...'.format(self.version.name)
         try:
             Item.objects.filter(version=self.version)[0].get_root().delete()
         except IndexError:
@@ -112,7 +112,6 @@ class Command(BaseCommand):
         if parent_section:
             section.parent = parent_section
 
-
         # Iterating over child nodes
         for children_element in parent_element:
                 
@@ -123,10 +122,10 @@ class Command(BaseCommand):
                 # Saving current section
                 section.save()
                 # Parsing child element
-                if 'toctree-wrapper' in children_element_classes:
-                    self.parse_section(children_element, parent_section)
-                else:
-                    self.parse_section(children_element, section)
+#                if 'toctree-wrapper' in children_element_classes:
+#                    self.parse_section(children_element, parent_section)
+#                else:
+                self.parse_section(children_element, section)
 
             else:
                 

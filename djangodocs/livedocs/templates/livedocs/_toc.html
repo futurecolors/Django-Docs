@@ -1,16 +1,18 @@
 {% load mptt_tags %}
 
-<h2 class="b-contents__header">Contents</h2>
+{% if toc %}
+    <h2 class="b-contents__header">Contents</h2>
 
-<ul class="b-contents__list">
-    {% recursetree toc %}
-        <li class="b-contents__item">
-            <a class="b-contents__link" href="#">{{ node.title }}</a>
-            {% if not node.is_leaf_node %}
-                <ul class="b-contents__list">
-                    {{ children }}
-                </ul>
-            {% endif %}
-        </li>
-    {% endrecursetree %}
-</ul>
+    <ul class="b-contents__list">
+        {% recursetree toc %}
+            <li class="b-contents__item">
+                <a class="b-contents__link" href="#">{{ node.title }}</a>
+                {% if not node.is_leaf_node %}
+                    <ul class="b-contents__list">
+                        {{ children }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endrecursetree %}
+    </ul>
+{% endif %}
