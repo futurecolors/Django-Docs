@@ -1,0 +1,19 @@
+/**
+ * Common styles
+ *
+ * @package     djangodocs
+ * @version     1.0
+ * @author      Artem Golikov <art@futurecolors.ru>
+ * @copyright   Future Colors
+ */
+
+
+/**
+ * @section     Common styles
+ */
+
+body {
+    font-family: Tahoma;
+    font-size: 62.5%;
+    color: #333;
+}
