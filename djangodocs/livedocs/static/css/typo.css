@@ -76,6 +76,7 @@
     font-size: 140%;
 }
 .b-content .highlight-python,
+.b-content .highlight-html,
 .b-content .highlight {
     margin: -0.5em -0.5em 1.04em;
     padding:  0.5em;
@@ -83,8 +84,24 @@
     font-size: 140%;
     font-family: courier;
     background: #f0f6dc;
+    overflow-x: hidden;
 }
-.m-search-focus .b-content .highlight-python {
+.b-content .highlight-html {
+    background: #e2eef6;
+}
+.b-content .highlight-python:hover,
+.b-content .highlight-html:hover,
+.b-content .highlight:hover {
+    overflow-x: auto;
+}
+.b-content .highlight-python .highlight,
+.b-content .highlight-html .highlight {
+    font-size: 100%;
+    overflow: visible;
+}
+.m-search-focus .b-content .highlight-python,
+.m-search-focus .b-content .highlight-html,
+.m-search-focus .b-content .highlight {
     background: #fffff0;
 }
 .b-content dl {
@@ -98,9 +115,11 @@
     font-size: 140%;
 }
 .b-content dt p,
-.b-content dd p,
-.b-content dd .highlight-python {
-    font-size: 100%;
+.b-content dd * {
+    font-size: 100%!important;
+}
+.b-content dd:last-child :last-child {
+    margin-bottom: 0px;
 }
 
 
