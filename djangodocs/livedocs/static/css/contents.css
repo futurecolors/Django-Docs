@@ -27,8 +27,19 @@
     border-left:  1px dotted #aaa;
 }
 .b-contents__item {
-    margin-bottom: 1em;
+    padding-bottom: 1em;
 }
+.b-contents__item .b-contents__item {
+    padding-bottom: 1em;
+    margin-right: -3px;
+}
+.b-contents__list .b-contents__item:last-child {
+    margin-bottom: 1em;
+    padding-bottom: 0px;
+}
+.b-contents__item_current {
+    border-right: 3px solid #555;
+} 
 .b-contents__link {
     font-size: 130%;
 }
