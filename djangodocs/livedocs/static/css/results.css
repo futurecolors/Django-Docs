@@ -1,0 +1,44 @@
+/**
+ * Search results
+ *
+ * @package     djangodocs
+ * @version     1.0
+ * @author      Artem Golikov <art@futurecolors.ru>
+ * @copyright   Future Colors
+ */
+
+
+/**
+ * @section     Search results
+ */
+
+.l-results {
+    width: 20%;
+    float: left;
+}
+.b-results {}
+.b-results__header {
+    padding-bottom: 1em;
+    font-size: 160%;
+}
+.b-results__nav {}
+.b-results__item {
+    margin-bottom: 2em;
+}
+.b-results__breadcrumbs {
+    line-height: 1.4;
+    color: #777;
+}
+.b-results__breadcrumbs-item,
+.b-results__breadcrumbs-separator {
+    display: inline-block;
+    vertical-align: middle;
+}
+.b-results__breadcrumbs-item {
+    white-space: nowrap;
+    max-width: 20em;
+    overflow: hidden;
+}
+.b-results__link {
+    font-size: 140%;
+}
