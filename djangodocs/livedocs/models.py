@@ -29,7 +29,7 @@ class Item(MPTTModel, models.Model):
         return '/'+self.path
 
     def get_breadcrumbs(self):
-        return self.get_ancestors()
+        return self.get_ancestors().filter(level__gte=3)
 
     class Meta:
         verbose_name = 'Content'
