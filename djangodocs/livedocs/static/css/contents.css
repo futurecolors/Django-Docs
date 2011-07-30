@@ -15,7 +15,7 @@
 .l-contents {
     width: 20%;
     float: right;
-    padding-top: 2.3em;
+    padding-top: 2.4em;
 }
 .b-contents {}
 .b-contents__header {
@@ -26,6 +26,9 @@
     margin-top: 0.5em;
     padding: 0.5em 0px 0px 1.5em;
     border-left:  1px dotted #aaa;
+}
+.m-search-focus .b-contents__list {
+    border: none;
 }
 .b-contents__item {
     padding-bottom: 1em;

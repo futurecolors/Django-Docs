@@ -31,11 +31,15 @@ body {
 }
 .b-section {}
 .m-search-focus .b-section {
-    text-shadow: 0px 0px 5px #999!important;
+    text-shadow: 0px 0px 6px #999!important;
+    color: transparent!important;
+}
+.m-search-focus .b-section span {
+    text-shadow: 0px 0px 6px #999!important;
     color: transparent!important;
 }
 .m-search-focus .b-section a {
-    text-shadow: 0px 0px 5px #7488e1!important;
+    text-shadow: 0px 0px 6px #7488e1!important;
     color: transparent!important;
 }
 
