@@ -1,5 +1,7 @@
 from django.db import models
+from django.db.models import permalink
 from mptt.models import MPTTModel
+
 
 class Version(models.Model):
     name = models.CharField('Version of docs', max_length=10)
@@ -14,18 +16,19 @@ class Version(models.Model):
 
 
 class Item(MPTTModel, models.Model):
-    slug = models.SlugField('Slug', max_length=100)
-    path = models.CharField('Path in docs', max_length=256)
-    title = models.CharField('Title', max_length=100)
+    slug = models.SlugField('Slug', max_length=1000)
+    path = models.CharField('Path in docs', max_length=1000)
+    title = models.CharField('Title', max_length=1000)
     content = models.TextField('Content')
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children', verbose_name=u'Parent')
     version = models.ForeignKey(Version)
 
     def __unicode__(self):
-        return self.title
+        return self.slug
 
+    @permalink
     def get_absolute_url(self):
-        return '/'+self.path
+        return ('item', (), {'item_path': self.path, 'current_version': self.version.name})
 
     def get_breadcrumbs(self):
         return self.get_ancestors()

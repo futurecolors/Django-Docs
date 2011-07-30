@@ -64,6 +64,9 @@
     font-family: courier;
     background: #f0f6dc;
 }
+.m-search-focus .b-content .highlight-python {
+    background: #fffff0;
+}
 .b-content dl {
     line-height: 1.4;
 }

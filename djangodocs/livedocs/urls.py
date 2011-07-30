@@ -1,13 +1,10 @@
 from django.conf.urls.defaults import patterns, url
 from django.views.generic.base import TemplateView
+from views import SearchView, ItemView
 
 
 urlpatterns = patterns('',
-    url(r'^$', TemplateView.as_view(template_name='livedocs/index.html')),
-    url(r'^search/$', 'livedocs.views.search', name='search'),
-
-    # Markup
-    url(r'^markup/index/', TemplateView.as_view(template_name='livedocs/markup/index.html')),
-    url(r'^markup/search/', TemplateView.as_view(template_name='livedocs/markup/search.html')),
-    url(r'^markup/focus/', TemplateView.as_view(template_name='livedocs/markup/focus.html')),
+    url(r'^$', SearchView.as_view(), name='index'),
+    url(r'^search/$', SearchView.as_view(), name='search'),
+    url(r'^(?P<item_path>.*)/$', ItemView.as_view(), name='item'),
 )

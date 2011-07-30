@@ -1,56 +1,18 @@
-<h2 class="b-contents__header">Contents</h2>
+{% load mptt_tags %}
 
-<ul class="b-contents__list">
-<li class="b-contents__item"><a class="b-contents__link" href="#">Making queries</a><ul class="b-contents__list">
-<li class="b-contents__item"><a class="b-contents__link" href="#creating-objects">Creating objects</a></li>
+{% if toc %}
+    <h2 class="b-contents__header">Contents</h2>
 
-<li class="b-contents__item"><a class="b-contents__link" href="#saving-changes-to-objects">Saving changes to objects</a><ul class="b-contents__list">
-<li class="b-contents__item"><a class="b-contents__link" href="#saving-foreignkey-and-manytomanyfield-fields">Saving <tt class="docutils literal"><span class="pre">ForeignKey</span></tt> and <tt class="docutils literal"><span class="pre">ManyToManyField</span></tt> fields</a></li>
-</ul>
-</li>
-<li class="b-contents__item"><a class="b-contents__link" href="#retrieving-objects">Retrieving objects</a><ul class="b-contents__list">
-<li class="b-contents__item"><a class="b-contents__link" href="#retrieving-all-objects">Retrieving all objects</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#retrieving-specific-objects-with-filters">Retrieving specific objects with filters</a><ul class="b-contents__list">
-
-<li class="b-contents__item"><a class="b-contents__link" href="#chaining-filters">Chaining filters</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#filtered-querysets-are-unique">Filtered QuerySets are unique</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#querysets-are-lazy">QuerySets are lazy</a></li>
-</ul>
-</li>
-<li class="b-contents__item"><a class="b-contents__link" href="#retrieving-a-single-object-with-get">Retrieving a single object with get</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#other-queryset-methods">Other QuerySet methods</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#limiting-querysets">Limiting QuerySets</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#field-lookups">Field lookups</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#lookups-that-span-relationships">Lookups that span relationships</a><ul class="b-contents__list">
-
-<li class="b-contents__item"><a class="b-contents__link" href="#spanning-multi-valued-relationships">Spanning multi-valued relationships</a></li>
-</ul>
-</li>
-<li class="b-contents__item"><a class="b-contents__link" href="#filters-can-reference-fields-on-the-model">Filters can reference fields on the model</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#the-pk-lookup-shortcut">The pk lookup shortcut</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#escaping-percent-signs-and-underscores-in-like-statements">Escaping percent signs and underscores in LIKE statements</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#caching-and-querysets">Caching and QuerySets</a></li>
-</ul>
-</li>
-<li class="b-contents__item"><a class="b-contents__link" href="#complex-lookups-with-q-objects">Complex lookups with Q objects</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#comparing-objects">Comparing objects</a></li>
-
-<li class="b-contents__item"><a class="b-contents__link" href="#deleting-objects">Deleting objects</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#updating-multiple-objects-at-once">Updating multiple objects at once</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#related-objects">Related objects</a><ul class="b-contents__list">
-<li class="b-contents__item"><a class="b-contents__link" href="#one-to-many-relationships">One-to-many relationships</a><ul class="b-contents__list">
-<li class="b-contents__item"><a class="b-contents__link" href="#forward">Forward</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#following-relationships-backward">Following relationships &#8220;backward&#8221;</a></li>
-</ul>
-</li>
-<li class="b-contents__item"><a class="b-contents__link" href="#many-to-many-relationships">Many-to-many relationships</a></li>
-
-<li class="b-contents__item"><a class="b-contents__link" href="#one-to-one-relationships">One-to-one relationships</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#how-are-the-backward-relationships-possible">How are the backward relationships possible?</a></li>
-<li class="b-contents__item"><a class="b-contents__link" href="#queries-over-related-objects">Queries over related objects</a></li>
-</ul>
-</li>
-<li class="b-contents__item"><a class="b-contents__link" href="#falling-back-to-raw-sql">Falling back to raw SQL</a></li>
-</ul>
-</li>
-</ul>
+    <ul class="b-contents__list">
+        {% recursetree toc %}
+            <li class="b-contents__item">
+                <a class="b-contents__link" href="#">{{ node.title }}</a>
+                {% if not node.is_leaf_node %}
+                    <ul class="b-contents__list">
+                        {{ children }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endrecursetree %}
+    </ul>
+{% endif %}

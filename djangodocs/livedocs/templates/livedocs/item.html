@@ -1,0 +1,7 @@
+{% extends 'livedocs/layout/layout.html' %}
+
+{% block content %}
+    <h1>{{ item.title }}</h1>
+    {{ item.content|safe }}
+{% endblock %}
+

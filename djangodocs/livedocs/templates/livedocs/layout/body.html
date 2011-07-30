@@ -25,6 +25,13 @@
 </head>
 <body class="{% block bodyclass %}{% endblock %}">
     {% include 'livedocs/layout/metrika.html' %}
+
     {% block layout %}{% endblock %}
+
+    {% compress js %}
+    <link rel="stylesheet" href="{{STATIC_URL}}js/libs/jquery-1.6.2.js" type="text/css">
+    <link rel="stylesheet" href="{{STATIC_URL}}js/plugins/jquery.bbq.js" type="text/css">
+    <link rel="stylesheet" href="{{STATIC_URL}}js/plugins/jquery.form.js" type="text/css">
+    {% endcompress %}
 </body>
 </html>

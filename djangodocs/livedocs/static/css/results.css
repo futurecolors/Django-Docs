@@ -15,6 +15,7 @@
 .l-results {
     width: 20%;
     float: left;
+    padding-top: 2.4em;
 }
 .b-results {}
 .b-results__header {
@@ -31,6 +32,10 @@
 .b-results__item_active {
     background: #ffffe0;
     border-color: #25911f;
+}
+.m-search-focus .b-results__item_active {
+    background: none;
+    border: none;
 }
 .b-results__breadcrumbs {
     line-height: 1.4;

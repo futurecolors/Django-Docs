@@ -1,46 +1,89 @@
 # -*- coding: utf-8 -*-
+from optparse import make_option
 from django.db import connections
 import os
 import subprocess
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from settings import ROOT_PATH
 import lxml.html
 from lxml import etree
 from pyquery import PyQuery as pq
 from livedocs.models import Item
-
-
-DISABLE_KEYS_SQL = 'SET FOREIGN_KEY_CHECKS = 0'
-TRUNCATE_TABLE_SQL_PATTERN = 'TRUNCATE TABLE {0}'
-ENABLE_KEYS_SQL = 'SET FOREIGN_KEY_CHECKS = 1'
-
-
-def truncate_tables(tables):
-    """ Очистка таблиц из списка """
-    cursor = connections['default'].cursor()
-    cursor.execute(DISABLE_KEYS_SQL)
-    for table in tables:
-        cursor.execute(TRUNCATE_TABLE_SQL_PATTERN.format(table))
-    cursor.execute(ENABLE_KEYS_SQL)
+from livedocs.models import Version
 
 
 class Command(BaseCommand):
     help = 'Update livedocs database'
-    SVN_URL = 'http://code.djangoproject.com/svn/django/trunk/'
+    SVN_TRUNK = 'http://code.djangoproject.com/svn/django/trunk/'
+    SVN_TAG = 'http://code.djangoproject.com/svn/django/tags/releases/{0}/'
     PATH_TO_DOCS = 'docs'
-    LOCAL_PATH = 'data'
-    HEADER_TAGS = ['h{0}'.format(i + 1) for i in range(6)]
+    LOCAL_PATH = 'livedocs/data'
+    HEADER_TAGS = ['h{0}'.format(i + 1) for i in range(10)]
     SUB_ITEMS_CLASSES = set(['toctree-wrapper', 'section'])
 
-    def handle(self, *args, **options):
-#        self._download_docs(version='1.3')
-#        self._make_html()
-        self._parse_html_and_update_db()
+    option_list = BaseCommand.option_list + (
+        make_option('--ver',
+                    action='store',
+                    dest='ver',
+                    default=None,
+                    help='Documentation version'),
+        make_option('--delete',
+                    action='store_true',
+                    dest='delete',
+                    default=False,
+                    help='Delete version'),
+        make_option('--default',
+                    action='store_true',
+                    dest='default',
+                    default=False,
+                    help='Is default version'),
+        make_option('--only-parse',
+                    action='store_true',
+                    dest='only_parse',
+                    default=False,
+                    help='Do not download docs and dont launch sphinx'),
+        )
+    version = None
 
-    def _download_docs(self, version):
+    def handle(self, *args, **options):
+        if not 'ver' in options or not options['ver']:
+            raise CommandError('Enter version')
+
+        try:
+            self.version = Version.objects.get(name=options['ver'])
+        except Version.DoesNotExist:
+            self.version = None
+
+        if options['delete']:
+            if self.version:
+                self.delete_version()
+            else:
+                raise CommandError('You are delete non exists version')
+        else:
+            if self.version:
+                self.delete_version()
+            else:
+                self.version = Version(name=options['ver'], is_default=options['default'])
+                self.version.save()
+
+#            if not options['only_parse']:
+#                self._download_docs()
+#                self._make_html()
+            self._parse_html_and_update_db()
+            self.create_paths()
+
+    def delete_version(self):
+        print 'Deleting version {0} ...'.format(self.version.name)
+        try:
+            Item.objects.filter(version=self.version)[0].get_root().delete()
+        except IndexError:
+            pass
+
+    def _download_docs(self):
         """ Download latest docs from svn repository """
-        print 'Downloading lastest docs...'
-        args = ['svn', 'co', os.path.join(self.SVN_URL, self.PATH_TO_DOCS), self.LOCAL_PATH]
+        print 'Downloading {0} docs...'.format(self.version.name)
+        svn_url = self.SVN_TRUNK if self.version.name == 'dev' else self.SVN_TAG.format(self.version.name)
+        args = ['svn', 'co', os.path.join(svn_url, self.PATH_TO_DOCS), self.LOCAL_PATH]
         subprocess.call(args)
 
     def _make_html(self):
@@ -52,41 +95,66 @@ class Command(BaseCommand):
     def _parse_html_and_update_db(self):
         print 'Parsing HTML...'
 
-        file = open(os.path.join(ROOT_PATH, 'data/_build/singlehtml/contents.html'))
+        file = open(os.path.join(ROOT_PATH, self.LOCAL_PATH, '_build/singlehtml/contents.html'))
         document = lxml.html.document_fromstring(file.read())
         content = document.get_element_by_id('contents')
 
         print 'Updating db...'
-        truncate_tables(['livedocs_item'])
-        self.parse_section(content, 0)
+        self.parse_section(content)
         self.create_paths()
 
 
     def parse_section(self, parent_element, parent_section=None):
-        """ Parsing section"""
-        section = Item(version_id=1)
+        """ Parsing section """
+            
+        section = Item(version=self.version)
         section.content = ''
         if parent_section:
             section.parent = parent_section
 
+        subitems = []
+
         # Iterating over child nodes
         for children_element in parent_element:
+                
             # Do we have any subsections?
             children_element_classes = set(children_element.attrib.get('class', '').split(' '))
+            
             if self.SUB_ITEMS_CLASSES & children_element_classes:
-                # Saving current section
-                section.save()
-                # Parsing child element
-                self.parse_section(children_element, section)
+
+                subitems.append(children_element)
 
             else:
+
                 # Filling section
                 if children_element.tag in self.HEADER_TAGS:
                     section.title = children_element.text or ''
-                elif  children_element.tag == 'span' and not children_element.text:
+                elif children_element.tag == 'span' and not children_element.text:
                     section.slug = children_element.attrib['id']
                 else:
                     section.content += lxml.html.tostring(children_element)
+
+        is_section_empty = not section.title
+
+        if not is_section_empty or not parent_section:
+            section.save()
+
+        for item in subitems:
+            if is_section_empty:
+                if parent_section:
+                    parent_for_item = parent_section
+                else:
+                    parent_for_item = section
+            else:
+                parent_for_item = section
+            self.parse_section(item, parent_for_item)
+
+
+    def import_images(self):
+        """Copy images to static root"""
+        SRC = os.path.join(ROOT_PATH, 'data/_build/singlehtml/_images')
+        DST = os.path.join(STATIC_ROOT, '_images')
+        shutil.copytree(SRC, DST)
 
 
     def create_paths(self):

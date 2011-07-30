@@ -5,7 +5,9 @@ from models import Item, Version
 
 
 class ItemAdmin(MPTTModelAdmin):
-    list_display = ['slug', 'content']
+    list_display = ['title', 'content', 'slug']
+    search_fields = ['title', 'content', 'slug']
+    list_filter = ['version']
     pass
 
 admin.site.register(Item, ItemAdmin)
