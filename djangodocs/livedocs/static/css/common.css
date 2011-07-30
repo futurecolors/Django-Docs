@@ -29,6 +29,21 @@ body {
     margin: 0px auto;
     padding: 0px 20px;
 }
+.b-section {}
+.m-search-focus .b-section {
+    text-shadow: 0px 0px 5px #999!important;
+    color: transparent!important;
+}
+.m-search-focus .b-section a {
+    text-shadow: 0px 0px 5px #7488e1!important;
+    color: transparent!important;
+}
+
+
+/**
+ * @subsection  Teaser
+ */
+
 .b-teaser {
     position: absolute;
     top: 50%;
