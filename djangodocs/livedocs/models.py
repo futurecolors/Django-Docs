@@ -22,7 +22,13 @@ class Item(MPTTModel, models.Model):
     version = models.ForeignKey(Version)
 
     def __unicode__(self):
-        return self.slug
+        return self.title
+
+    def get_absolute_url(self):
+        return self.path
+
+    def get_breadcrumbs(self):
+        return self.get_ancestors()
 
     class Meta:
         verbose_name = 'Content'

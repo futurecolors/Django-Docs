@@ -260,7 +260,7 @@ this example:</p>
 once, at the last line (<tt class="docutils literal"><span class="pre">print</span> <span class="pre">q</span></tt>). In general, the results of a <tt class="docutils literal"><span class="pre">QuerySet</span></tt>
 aren't fetched from the database until you &quot;ask&quot; for them. When you do, the
 <tt class="docutils literal"><span class="pre">QuerySet</span></tt> is <em>evaluated</em> by accessing the database. For more details on
-exactly when evaluation takes place, see <a class="reference internal" href="../../../ref/models/querysets/#when-querysets-are-evaluated"><em>When QuerySets are evaluated</em></a>.</p>
+exactly when evaluation takes place, see <a class="reference internal" href="../../../ref/models/querysets/_content.html#when-querysets-are-evaluated"><em>When QuerySets are evaluated</em></a>.</p>
 
 </div>
 </div>
@@ -294,7 +294,7 @@ an attribute of the model class itself.</p>
 <p>Most of the time you'll use <tt class="docutils literal"><span class="pre">all()</span></tt>, <tt class="docutils literal"><span class="pre">get()</span></tt>, <tt class="docutils literal"><span class="pre">filter()</span></tt> and <tt class="docutils literal"><span class="pre">exclude()</span></tt>
 
 when you need to look up objects from the database. However, that's far from all
-there is; see the <a class="reference internal" href="../../../ref/models/querysets/#queryset-api"><em>QuerySet API Reference</em></a> for a complete
+there is; see the <a class="reference internal" href="../../../ref/models/querysets/_content.html#queryset-api"><em>QuerySet API Reference</em></a> for a complete
 list of all the various <tt class="docutils literal"><span class="pre">QuerySet</span></tt> methods.</p>
 </div>
 <div class="section" id="s-limiting-querysets">
@@ -364,11 +364,11 @@ information, see <a class="reference external" href="http://docs.python.org/tuto
 <p>If you pass an invalid keyword argument, a lookup function will raise
 <tt class="docutils literal"><span class="pre">TypeError</span></tt>.</p>
 <p>The database API supports about two dozen lookup types; a complete reference
-can be found in the <a class="reference internal" href="../../../ref/models/querysets/#field-lookups"><em>field lookup reference</em></a>. To give you a taste of what's available, here's some of the more common lookups
+can be found in the <a class="reference internal" href="../../../ref/models/querysets/_content.html#field-lookups"><em>field lookup reference</em></a>. To give you a taste of what's available, here's some of the more common lookups
 you'll probably use:</p>
 
 <dl class="docutils">
-<dt><a class="reference internal" href="../../../ref/models/querysets/#std:fieldlookup-exact"><tt class="xref std std-lookup docutils literal"><span class="pre">exact</span></tt></a></dt>
+<dt><a class="reference internal" href="../../../ref/models/querysets/_content.html#std:fieldlookup-exact"><tt class="xref std std-lookup docutils literal"><span class="pre">exact</span></tt></a></dt>
 <dd><p class="first">An &quot;exact&quot; match. For example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Entry</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">headline__exact</span><span class="o">=</span><span class="s">&quot;Man bites dog&quot;</span><span class="p">)</span>
 
@@ -391,7 +391,7 @@ doesn't contain a double underscore -- the lookup type is assumed to be
 <p class="last">This is for convenience, because <tt class="docutils literal"><span class="pre">exact</span></tt> lookups are the common case.</p>
 
 </dd>
-<dt><a class="reference internal" href="../../../ref/models/querysets/#std:fieldlookup-iexact"><tt class="xref std std-lookup docutils literal"><span class="pre">iexact</span></tt></a></dt>
+<dt><a class="reference internal" href="../../../ref/models/querysets/_content.html#std:fieldlookup-iexact"><tt class="xref std std-lookup docutils literal"><span class="pre">iexact</span></tt></a></dt>
 <dd><p class="first">A case-insensitive match. So, the query:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Blog</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name__iexact</span><span class="o">=</span><span class="s">&quot;beatles blog&quot;</span><span class="p">)</span>
 
@@ -400,7 +400,7 @@ doesn't contain a double underscore -- the lookup type is assumed to be
 <p class="last">Would match a <tt class="docutils literal"><span class="pre">Blog</span></tt> titled &quot;Beatles Blog&quot;, &quot;beatles blog&quot;, or even
 &quot;BeAtlES blOG&quot;.</p>
 </dd>
-<dt><a class="reference internal" href="../../../ref/models/querysets/#std:fieldlookup-contains"><tt class="xref std std-lookup docutils literal"><span class="pre">contains</span></tt></a></dt>
+<dt><a class="reference internal" href="../../../ref/models/querysets/_content.html#std:fieldlookup-contains"><tt class="xref std std-lookup docutils literal"><span class="pre">contains</span></tt></a></dt>
 <dd><p class="first">Case-sensitive containment test. For example:</p>
 
 <div class="highlight-python"><div class="highlight"><pre><span class="n">Entry</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">headline__contains</span><span class="o">=</span><span class="s">&#39;Lennon&#39;</span><span class="p">)</span>
@@ -414,16 +414,16 @@ doesn't contain a double underscore -- the lookup type is assumed to be
 <p>Note this will match the headline <tt class="docutils literal"><span class="pre">'Today</span> <span class="pre">Lennon</span> <span class="pre">honored'</span></tt> but not
 <tt class="docutils literal"><span class="pre">'today</span> <span class="pre">lennon</span> <span class="pre">honored'</span></tt>.</p>
 
-<p class="last">There's also a case-insensitive version, <a class="reference internal" href="../../../ref/models/querysets/#std:fieldlookup-icontains"><tt class="xref std std-lookup docutils literal"><span class="pre">icontains</span></tt></a>.</p>
+<p class="last">There's also a case-insensitive version, <a class="reference internal" href="../../../ref/models/querysets/_content.html#std:fieldlookup-icontains"><tt class="xref std std-lookup docutils literal"><span class="pre">icontains</span></tt></a>.</p>
 </dd>
-<dt><a class="reference internal" href="../../../ref/models/querysets/#std:fieldlookup-startswith"><tt class="xref std std-lookup docutils literal"><span class="pre">startswith</span></tt></a>, <a class="reference internal" href="../../../ref/models/querysets/#std:fieldlookup-endswith"><tt class="xref std std-lookup docutils literal"><span class="pre">endswith</span></tt></a></dt>
+<dt><a class="reference internal" href="../../../ref/models/querysets/_content.html#std:fieldlookup-startswith"><tt class="xref std std-lookup docutils literal"><span class="pre">startswith</span></tt></a>, <a class="reference internal" href="../../../ref/models/querysets/_content.html#std:fieldlookup-endswith"><tt class="xref std std-lookup docutils literal"><span class="pre">endswith</span></tt></a></dt>
 <dd>Starts-with and ends-with search, respectively. There are also
-case-insensitive versions called <a class="reference internal" href="../../../ref/models/querysets/#std:fieldlookup-istartswith"><tt class="xref std std-lookup docutils literal"><span class="pre">istartswith</span></tt></a> and
-<a class="reference internal" href="../../../ref/models/querysets/#std:fieldlookup-iendswith"><tt class="xref std std-lookup docutils literal"><span class="pre">iendswith</span></tt></a>.</dd>
+case-insensitive versions called <a class="reference internal" href="../../../ref/models/querysets/_content.html#std:fieldlookup-istartswith"><tt class="xref std std-lookup docutils literal"><span class="pre">istartswith</span></tt></a> and
+<a class="reference internal" href="../../../ref/models/querysets/_content.html#std:fieldlookup-iendswith"><tt class="xref std std-lookup docutils literal"><span class="pre">iendswith</span></tt></a>.</dd>
 </dl>
 
 <p>Again, this only scratches the surface. A complete reference can be found in the
-<a class="reference internal" href="../../../ref/models/querysets/#field-lookups"><em>field lookup reference</em></a>.</p>
+<a class="reference internal" href="../../../ref/models/querysets/_content.html#field-lookups"><em>field lookup reference</em></a>.</p>
 </div>
 <div class="section" id="s-lookups-that-span-relationships">
 <span id="lookups-that-span-relationships"></span><h3>Lookups that span relationships<a class="headerlink" href="#lookups-that-span-relationships" title="Permalink to this headline">¶</a></h3>
@@ -818,8 +818,8 @@ it. For example:</p>
 </div>
 <div class="versionadded">
 <span class="title">New in Django 1.3:</span> This cascade behavior is customizable via the
-<a class="reference internal" href="../../../ref/models/fields/#django.db.models.ForeignKey.on_delete" title="django.db.models.ForeignKey.on_delete"><tt class="xref py py-attr docutils literal"><span class="pre">on_delete</span></tt></a> argument to the
-<a class="reference internal" href="../../../ref/models/fields/#django.db.models.ForeignKey" title="django.db.models.ForeignKey"><tt class="xref py py-class docutils literal"><span class="pre">ForeignKey</span></tt></a>.</div>
+<a class="reference internal" href="../../../ref/models/fields/_content.html#django.db.models.ForeignKey.on_delete" title="django.db.models.ForeignKey.on_delete"><tt class="xref py py-attr docutils literal"><span class="pre">on_delete</span></tt></a> argument to the
+<a class="reference internal" href="../../../ref/models/fields/_content.html#django.db.models.ForeignKey" title="django.db.models.ForeignKey"><tt class="xref py py-class docutils literal"><span class="pre">ForeignKey</span></tt></a>.</div>
 
 <p>Note that <tt class="docutils literal"><span class="pre">delete()</span></tt> is the only <tt class="docutils literal"><span class="pre">QuerySet</span></tt> method that is not exposed on a
 <tt class="docutils literal"><span class="pre">Manager</span></tt> itself. This is a safety mechanism to prevent you from accidentally
@@ -1078,7 +1078,7 @@ above example, if the <tt class="docutils literal"><span class="pre">ManyToManyF
 <div class="section" id="s-one-to-one-relationships">
 <span id="one-to-one-relationships"></span><h3>One-to-one relationships<a class="headerlink" href="#one-to-one-relationships" title="Permalink to this headline">¶</a></h3>
 <p>One-to-one relationships are very similar to many-to-one relationships. If you
-define a <a class="reference internal" href="../../../ref/models/fields/#django.db.models.OneToOneField" title="django.db.models.OneToOneField"><tt class="xref py py-class docutils literal"><span class="pre">OneToOneField</span></tt></a> on your model, instances of
+define a <a class="reference internal" href="../../../ref/models/fields/_content.html#django.db.models.OneToOneField" title="django.db.models.OneToOneField"><tt class="xref py py-class docutils literal"><span class="pre">OneToOneField</span></tt></a> on your model, instances of
 that model will have access to the related object via a simple attribute of the
 model.</p>
 <p>For example:</p>
@@ -1094,8 +1094,8 @@ model.</p>
 </pre></div>
 </div>
 <p>The difference comes in &quot;reverse&quot; queries. The related model in a one-to-one
-relationship also has access to a <a class="reference internal" href="../managers/#django.db.models.Manager" title="django.db.models.Manager"><tt class="xref py py-class docutils literal"><span class="pre">Manager</span></tt></a> object, but
-that <a class="reference internal" href="../managers/#django.db.models.Manager" title="django.db.models.Manager"><tt class="xref py py-class docutils literal"><span class="pre">Manager</span></tt></a> represents a single object, rather than
+relationship also has access to a <a class="reference internal" href="../managers/_content.html#django.db.models.Manager" title="django.db.models.Manager"><tt class="xref py py-class docutils literal"><span class="pre">Manager</span></tt></a> object, but
+that <a class="reference internal" href="../managers/_content.html#django.db.models.Manager" title="django.db.models.Manager"><tt class="xref py py-class docutils literal"><span class="pre">Manager</span></tt></a> represents a single object, rather than
 a collection of objects:</p>
 
 <div class="highlight-python"><div class="highlight"><pre><span class="n">e</span> <span class="o">=</span> <span class="n">Entry</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -1120,10 +1120,10 @@ Repeat Yourself) principle, so Django only requires you to define the
 relationship on one end.</p>
 <p>But how is this possible, given that a model class doesn't know which other
 model classes are related to it until those other model classes are loaded?</p>
-<p>The answer lies in the <a class="reference internal" href="../../../ref/settings/#std:setting-INSTALLED_APPS"><tt class="xref std std-setting docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> setting. The first time any model is
-loaded, Django iterates over every model in <a class="reference internal" href="../../../ref/settings/#std:setting-INSTALLED_APPS"><tt class="xref std std-setting docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> and creates the
+<p>The answer lies in the <a class="reference internal" href="../../../ref/settings/_content.html#std:setting-INSTALLED_APPS"><tt class="xref std std-setting docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> setting. The first time any model is
+loaded, Django iterates over every model in <a class="reference internal" href="../../../ref/settings/_content.html#std:setting-INSTALLED_APPS"><tt class="xref std std-setting docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> and creates the
 backward relationships in memory as needed. Essentially, one of the functions
-of <a class="reference internal" href="../../../ref/settings/#std:setting-INSTALLED_APPS"><tt class="xref std std-setting docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> is to tell Django the entire model domain.</p>
+of <a class="reference internal" href="../../../ref/settings/_content.html#std:setting-INSTALLED_APPS"><tt class="xref std std-setting docutils literal"><span class="pre">INSTALLED_APPS</span></tt></a> is to tell Django the entire model domain.</p>
 
 </div>
 <div class="section" id="s-queries-over-related-objects">
