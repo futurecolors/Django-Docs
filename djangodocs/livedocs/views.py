@@ -19,7 +19,9 @@ class BaseLiveView(View):
         match = resolve(request.path)
         avaliable_versions = Version.objects.all().order_by('name')
         for version in avaliable_versions:
-            version.url = reverse(match.url_name, kwargs=kwargs)
+            params = kwargs.copy()
+            params['current_version'] = version.name
+            version.url = reverse(match.url_name, kwargs=params)
             if version.name == kwargs['current_version']:
                 version.selected = True
 

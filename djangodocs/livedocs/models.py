@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import permalink
 from mptt.models import MPTTModel
 
 
@@ -25,8 +26,9 @@ class Item(MPTTModel, models.Model):
     def __unicode__(self):
         return self.slug
 
+    @permalink
     def get_absolute_url(self):
-        return '/'+self.path
+        return ('item', (), {'item_path': self.path, 'current_version': self.version.name})
 
     def get_breadcrumbs(self):
         return self.get_ancestors()
