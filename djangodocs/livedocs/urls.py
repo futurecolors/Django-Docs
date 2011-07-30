@@ -5,9 +5,4 @@ from django.views.generic.base import TemplateView
 urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name='livedocs/index.html')),
     url(r'^search/$', 'livedocs.views.search', name='search'),
-
-    # Markup
-    url(r'^markup/index/', TemplateView.as_view(template_name='livedocs/markup/index.html')),
-    url(r'^markup/search/', TemplateView.as_view(template_name='livedocs/markup/search.html')),
-    url(r'^markup/focus/', TemplateView.as_view(template_name='livedocs/markup/focus.html')),
 )

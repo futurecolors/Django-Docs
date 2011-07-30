@@ -1,4 +1,5 @@
 from annoying.decorators import render_to
+from django.core.urlresolvers import resolve, reverse
 from django.db.models.query_utils import Q
 from forms import SearchForm
 from models import Item, Version
@@ -10,15 +11,18 @@ def search(request, current_version):
     if search_form.is_valid():
         query = search_form.cleaned_data['query']
 
-    items = Item.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))
-    
+    items = Item.objects.filter(Q(version__name=current_version), Q(title__icontains=query) | Q(content__icontains=query))
+
+    match = resolve(request.path)
+
     avaliable_versions = Version.objects.all().order_by('name')
     for version in avaliable_versions:
+        version.url = reverse(match.url_name, kwargs={'current_version': version.name})
         if version.name == current_version:
             version.selected = True
 
     return {'search_form': search_form,
-            'version': version,
+            'current': current_version,
             'avaliable_versions': avaliable_versions,
             'query': query,
             'items': items,
