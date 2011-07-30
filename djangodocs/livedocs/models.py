@@ -1,6 +1,7 @@
 from django.db import models
 from mptt.models import MPTTModel
 
+
 class Version(models.Model):
     name = models.CharField('Version of docs', max_length=10)
     is_default = models.BooleanField('Display by default', default=False)
