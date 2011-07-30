@@ -31,7 +31,7 @@ class Item(MPTTModel, models.Model):
         return ('item', (), {'item_path': self.path, 'current_version': self.version.name})
 
     def get_breadcrumbs(self):
-        return self.get_ancestors()
+        return self.get_ancestors().filter(level__gte=3)
 
     class Meta:
         verbose_name = 'Content'
