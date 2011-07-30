@@ -121,6 +121,14 @@
 .b-content dd:last-child :last-child {
     margin-bottom: 0px;
 }
+.b-content .versionadded {
+    font-size: 120%;
+    font-style: italic;
+    color: #11721a;
+}
+.b-content .versionadded a {
+    color: #11721a!important;
+}
 
 
 /**

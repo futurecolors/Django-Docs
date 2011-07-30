@@ -13,8 +13,9 @@
  */
 
 .l-results {
+    position: fixed;
+    z-index: 8;
     width: 20%;
-    float: left;
     padding-top: 2.4em;
 }
 .b-results {}
@@ -52,5 +53,6 @@
     overflow: hidden;
 }
 .b-results__link {
+    line-height: 1.2;
     font-size: 140%;
 }
