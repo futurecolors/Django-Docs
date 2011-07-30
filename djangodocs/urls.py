@@ -10,7 +10,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'(?P<current_version>[^/]+?)/', include('livedocs.urls')),
-    (r'^data/(?P<path>.*)', 'django.views.static.serve', {'document_root': os.path.join(ROOT_PATH, 'data'),
+    (r'^data/(?P<path>.*)', 'django.views.static.serve', {'document_root': os.path.join(ROOT_PATH, 'livedocs/data'),
                                                           'show_indexes': True}),
 
     url(r'^admin/', include(admin.site.urls)),

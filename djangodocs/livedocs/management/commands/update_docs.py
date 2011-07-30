@@ -28,14 +28,15 @@ class Command(BaseCommand):
     help = 'Update livedocs database'
     SVN_URL = 'http://code.djangoproject.com/svn/django/trunk/'
     PATH_TO_DOCS = 'docs'
-    LOCAL_PATH = 'data'
-    HEADER_TAGS = ['h{0}'.format(i + 1) for i in range(6)]
+    LOCAL_PATH = 'livedocs/data'
+    HEADER_TAGS = ['h{0}'.format(i + 1) for i in range(10)]
     SUB_ITEMS_CLASSES = set(['toctree-wrapper', 'section'])
 
     def handle(self, *args, **options):
 #        self._download_docs(version='1.3')
 #        self._make_html()
         self._parse_html_and_update_db()
+        self.create_paths()
 
     def _download_docs(self, version):
         """ Download latest docs from svn repository """
@@ -52,18 +53,21 @@ class Command(BaseCommand):
     def _parse_html_and_update_db(self):
         print 'Parsing HTML...'
 
-        file = open(os.path.join(ROOT_PATH, 'data/_build/singlehtml/contents.html'))
+        file = open(os.path.join(ROOT_PATH, self.LOCAL_PATH, '_build/singlehtml/contents.html'))
         document = lxml.html.document_fromstring(file.read())
         content = document.get_element_by_id('contents')
 
         print 'Updating db...'
         truncate_tables(['livedocs_item'])
-        self.parse_section(content, 0)
+        self.parse_section(content)
         self.create_paths()
 
 
     def parse_section(self, parent_element, parent_section=None):
         """ Parsing section"""
+
+        xxx = parent_section and parent_section.title == 'Request and response objects'
+            
         section = Item(version_id=1)
         section.content = ''
         if parent_section:
@@ -71,22 +75,29 @@ class Command(BaseCommand):
 
         # Iterating over child nodes
         for children_element in parent_element:
+            if xxx:
+                print children_element
+                
             # Do we have any subsections?
             children_element_classes = set(children_element.attrib.get('class', '').split(' '))
             if self.SUB_ITEMS_CLASSES & children_element_classes:
                 # Saving current section
                 section.save()
                 # Parsing child element
-                self.parse_section(children_element, section)
+                if 'toctree-wrapper' in children_element_classes:
+                    self.parse_section(children_element, parent_section)
+                else:
+                    self.parse_section(children_element, section)
 
             else:
                 # Filling section
                 if children_element.tag in self.HEADER_TAGS:
                     section.title = children_element.text or ''
-                elif  children_element.tag == 'span' and not children_element.text:
+                elif children_element.tag == 'span' and not children_element.text:
                     section.slug = children_element.attrib['id']
                 else:
                     section.content += lxml.html.tostring(children_element)
+        section.save()
 
 
     def create_paths(self):

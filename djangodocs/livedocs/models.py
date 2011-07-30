@@ -14,9 +14,9 @@ class Version(models.Model):
 
 
 class Item(MPTTModel, models.Model):
-    slug = models.SlugField('Slug', max_length=100)
-    path = models.CharField('Path in docs', max_length=256)
-    title = models.CharField('Title', max_length=100)
+    slug = models.SlugField('Slug', max_length=1000)
+    path = models.CharField('Path in docs', max_length=1000)
+    title = models.CharField('Title', max_length=1000)
     content = models.TextField('Content')
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children', verbose_name=u'Parent')
     version = models.ForeignKey(Version)
