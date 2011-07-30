@@ -37,6 +37,11 @@ class Command(BaseCommand):
                     dest='default',
                     default=False,
                     help='Is default version'),
+        make_option('--only-parse',
+                    action='store_true',
+                    dest='only_parse',
+                    default=False,
+                    help='Do not download docs and dont launch sphinx'),
         )
     version = None
 
@@ -61,8 +66,9 @@ class Command(BaseCommand):
                 self.version = Version(name=options['ver'], is_default=options['default'])
                 self.version.save()
 
-            self._download_docs()
-            self._make_html()
+            if not options['only_parse']:
+                self._download_docs()
+                self._make_html()
             self._parse_html_and_update_db()
             self.create_paths()
 

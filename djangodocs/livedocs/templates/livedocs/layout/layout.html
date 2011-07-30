@@ -1,4 +1,5 @@
 {% extends 'livedocs/layout/body.html' %}
+{% load toc %}
 
 {% block layout %}
     {% include 'livedocs/_search_form.html' %}
@@ -9,7 +10,7 @@
         </aside>
         <aside class="l-contents b-contents">
             {% block toc %}
-            {% include 'livedocs/_toc.html' %}
+                {% toc %}
             {% endblock %}
         </aside>
         <section class="l-content b-content">
