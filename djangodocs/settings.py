@@ -116,6 +116,8 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     'livedocs',
 
+    'south',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -147,3 +149,8 @@ LOGGING = {
         },
     }
 }
+
+try:
+    from settings_local import *
+except ImportError:
+    print u'File settings_local.py is not found. Continuing with production settings.'
