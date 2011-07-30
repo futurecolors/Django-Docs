@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'livedocs',
     
     'compressor',
+    'mptt',
 
     'south',
 

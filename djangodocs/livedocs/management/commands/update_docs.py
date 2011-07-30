@@ -71,7 +71,6 @@ class Command(BaseCommand):
 
         # Iterating over child nodes
         for children_element in parent_element:
-
             # Do we have any subsections?
             children_element_classes = set(children_element.attrib.get('class', '').split(' '))
             if self.SUB_ITEMS_CLASSES & children_element_classes:
@@ -83,7 +82,7 @@ class Command(BaseCommand):
             else:
                 # Filling section
                 if children_element.tag in self.HEADER_TAGS:
-                    section.name = children_element.text
+                    section.title = children_element.text or ''
                 elif  children_element.tag == 'span' and not children_element.text:
                     section.slug = children_element.attrib['id']
                 else:
