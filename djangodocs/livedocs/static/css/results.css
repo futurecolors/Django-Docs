@@ -23,6 +23,7 @@
 }
 .b-results__nav {}
 .b-results__item {
+    min-height: 4em;
     margin-bottom: 2em;
 }
 .b-results__breadcrumbs {
