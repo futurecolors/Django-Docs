@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 from optparse import make_option
-from django.db import connections
+import shutil
 import os
 import subprocess
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from settings import ROOT_PATH
 import lxml.html
-from lxml import etree
-from pyquery import PyQuery as pq
 from livedocs.models import Item
 from livedocs.models import Version
+from settings import STATIC_ROOT
 
 
 class Command(BaseCommand):
@@ -46,31 +45,34 @@ class Command(BaseCommand):
     version = None
 
     def handle(self, *args, **options):
-        if not 'ver' in options or not options['ver']:
-            raise CommandError('Enter version')
-
-        try:
-            self.version = Version.objects.get(name=options['ver'])
-        except Version.DoesNotExist:
-            self.version = None
-
-        if options['delete']:
-            if self.version:
-                self.delete_version()
-            else:
-                raise CommandError('You are delete non exists version')
-        else:
-            if self.version:
-                self.delete_version()
-            else:
-                self.version = Version(name=options['ver'], is_default=options['default'])
-                self.version.save()
-
-            if not options['only_parse']:
-                self._download_docs()
-                self._make_html()
-            self._parse_html_and_update_db()
-            self.create_paths()
+        self.import_images()
+#        if not 'ver' in options or not options['ver']:
+#            raise CommandError('Enter version')
+#
+#        try:
+#            self.version = Version.objects.get(name=options['ver'])
+#        except Version.DoesNotExist:
+#            self.version = None
+#
+#        if options['delete']:
+#            if self.version:
+#                self.delete_version()
+#            else:
+#                raise CommandError('You are delete non exists version')
+#        else:
+#            if self.version:
+#                self.delete_version()
+#            else:
+#                self.version = Version(name=options['ver'], is_default=options['default'])
+#                self.version.save()
+#
+#            if not options['only_parse']:
+#                self._download_docs()
+#                self._make_html()
+#
+#        with transaction.commit_on_success():
+#            self._parse_html_and_update_db()
+#            self.create_paths()
 
     def delete_version(self):
         print 'Deleting version {0} ...'.format(self.version.name)
@@ -139,6 +141,12 @@ class Command(BaseCommand):
                     
         section.save()
 
+
+    def import_images(self):
+        """Copy images to static root"""
+        SRC = os.path.join(ROOT_PATH, 'data/_build/singlehtml/_images')
+        DST = os.path.join(STATIC_ROOT, '_images')
+        shutil.copytree(SRC, DST)
 
     def create_paths(self):
         """Filling site paths at once"""
