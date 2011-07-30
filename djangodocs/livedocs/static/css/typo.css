@@ -23,22 +23,22 @@
  */
 
 .b-content h1 {
-    height: 1.07em;
+    height: 1.5em;
     padding-top: 0.4em;
     font-size: 280%;
 }
 .b-content h2 {
-    height: 1.15em;
+    height: 1.8em;
     padding-top: 0.55em;
     font-size: 240%;
 }
 .b-content h3 {
-    height: 1.1em;
+    height: 1.6em;
     padding-top: 0.9em;
     font-size: 200%;
 }
 .b-content h4 {
-    height: 1.1em;
+    height: 1.6em;
     font-size: 180%;
 }
 .b-content h5 {
