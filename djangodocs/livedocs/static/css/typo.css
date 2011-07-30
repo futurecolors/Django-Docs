@@ -1,0 +1,20 @@
+/**
+ * Content / text styles, typography
+ *
+ * @package     djangodocs
+ * @version     1.0
+ * @author      Artem Golikov <art@futurecolors.ru>
+ * @copyright   Future Colors
+ */
+
+
+/**
+ * @section     Content / text styles, typography
+ */
+
+.l-content {
+    margin: 0px 25%;
+}
+.b-content {
+    
+}

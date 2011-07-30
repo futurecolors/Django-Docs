@@ -1,0 +1,34 @@
+/**
+ * Section contents
+ *
+ * @package     djangodocs
+ * @version     1.0
+ * @author      Artem Golikov <art@futurecolors.ru>
+ * @copyright   Future Colors
+ */
+
+
+/**
+ * @section     Section contents
+ */
+
+.l-contents {
+    width: 20%;
+    float: right;
+}
+.b-contents {}
+.b-contents__header {
+    padding-bottom: 1em;
+    font-size: 160%;
+}
+.b-contents__list .b-contents__list {
+    margin-top: 0.5em;
+    padding: 0.5em 0px 0px 1.5em;
+    border-left:  1px dotted #aaa;
+}
+.b-contents__item {
+    margin-bottom: 1em;
+}
+.b-contents__link {
+    font-size: 130%;
+}

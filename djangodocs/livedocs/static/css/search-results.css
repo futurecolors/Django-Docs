@@ -1,0 +1,18 @@
+/**
+ * Search results
+ *
+ * @package     djangodocs
+ * @version     1.0
+ * @author      Artem Golikov <art@futurecolors.ru>
+ * @copyright   Future Colors
+ */
+
+
+/**
+ * @section     Search results
+ */
+
+.l-search-results {
+    width: 20%;
+    float: left;
+}

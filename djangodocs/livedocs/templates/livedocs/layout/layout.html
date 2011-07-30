@@ -6,15 +6,17 @@
 
 {% block layout %}
     <header class="b-header">
-        <form class="b-search">
-            <input type="text" class="b-search__keyword" value="django wtf" />
-            <input type="submit" class="b-search__sumbit" value="Search" />
-        </form>
-        <nav class="b-version">
-            <a class="b-version__link g-systemlink" href="">1.2</a>
-            <a class="b-version__link b-version__link_active g-systemlink" href="">1.3</a>
-            <a class="b-version__link g-systemlink" href="">dev</a>
-        </nav>
+        <div class="l-wrapper">
+            <form class="b-search">
+                <input type="text" class="b-search__keyword" value="django wtf" />
+                <input type="submit" class="b-search__sumbit" value="Search" />
+            </form>
+            <nav class="b-version">
+                <a class="b-version__link g-systemlink" href="">1.2</a>
+                <a class="b-version__link b-version__link_active g-systemlink" href="">1.3</a>
+                <a class="b-version__link g-systemlink" href="">dev</a>
+            </nav>
+        </div>
     </header>
     {% block content %}{% endblock %}
 {% endblock %}

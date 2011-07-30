@@ -1,13 +1,15 @@
 {% extends 'livedocs/layout/layout.html' %}
 
 {% block content %}
-    <aside class="l-search-results">
+    <div class="l-wrapper l-header-spacer">
+        <aside class="l-search-results">
 
-    </aside>
-    <aside class="l-contents">
-
-    </aside>
-    <section class="l-content b-content">
-
-    </section>
+        </aside>
+        <aside class="l-contents b-contents">
+            {% include 'livedocs/markup/_contents.html' %}
+        </aside>
+        <section class="l-content b-content">
+            {% include 'livedocs/markup/_content.html' %}
+        </section>
+    </div>
 {% endblock %}
