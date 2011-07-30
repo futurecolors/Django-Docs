@@ -1,14 +1,14 @@
 {% extends 'livedocs/layout/body.html' %}
 
 
-{% block bodyclass %}{% endblock %}
+{% block bodyclass %}_m-search-focus{% endblock %}
 
 
 {% block layout %}
     <header class="b-header">
         <form class="b-search">
-            <input type="text" class="b-search__keyword" />
-            <input type="submit" class="b-search__sumbit" />
+            <input type="text" class="b-search__keyword" value="django wtf" />
+            <input type="submit" class="b-search__sumbit" value="Search" />
         </form>
     </header>
 {% endblock %}
