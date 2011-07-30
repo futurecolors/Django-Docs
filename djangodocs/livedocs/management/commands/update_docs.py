@@ -150,6 +150,13 @@ class Command(BaseCommand):
             self.parse_section(item, parent_for_item)
 
 
+    def import_images(self):
+        """Copy images to static root"""
+        SRC = os.path.join(ROOT_PATH, 'data/_build/singlehtml/_images')
+        DST = os.path.join(STATIC_ROOT, '_images')
+        shutil.copytree(SRC, DST)
+
+
     def create_paths(self):
         """Filling site paths at once"""
         for section in Item.objects.all():
