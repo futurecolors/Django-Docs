@@ -1,10 +1,12 @@
 {% extends 'livedocs/layout/layout.html' %}
 
 {% block results %}
-    Search for {{ query }}.<br/>
-    Found {{ found_count }} items:
-
-    <h1 class="b-results__header">Search results</h1>
+    <h1 class="b-results__header">
+        Search results
+        {% if found_count %}
+        ({{ found_count }})
+        {% endif %}
+    </h1>
 
     <nav class="b-results__nav">
         {% for item in items %}
@@ -24,5 +26,3 @@
 
 {% endblock %}
 
-{% block toc %}
-{% endblock %}
