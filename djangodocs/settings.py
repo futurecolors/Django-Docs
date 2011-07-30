@@ -1,4 +1,9 @@
+# -*- coding: utf-8 -*-
 # Django settings for djangodocs project.
+import os, sys
+
+ROOT_PATH = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(ROOT_PATH)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -100,7 +105,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'djangodocs.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -109,16 +114,15 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'livedocs',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admin',
 )
 
 # A sample logging configuration. The only tangible logging
