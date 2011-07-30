@@ -1,0 +1,17 @@
+<header class="b-header">
+    <div class="l-wrapper">
+        <form action="/search" method="get" class="b-search">
+            {% for field in search_form.visible_fields %}
+                {{ field }}
+            {% endfor %}
+            <input type="submit" class="b-search__sumbit" value="Search" />
+        </form>
+        <nav class="b-version">
+            {% for version in avaliable_versions %}
+                <a class="b-version__link
+                    g-systemlink{% if version.selected %} b-version__link_active{% endif %}" href="">{{ version }}</a>
+            {% endfor %}
+        </nav>
+    </div>
+</header>
+

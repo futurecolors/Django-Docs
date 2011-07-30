@@ -25,7 +25,7 @@ class Item(MPTTModel, models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return self.path
+        return '/'+self.path
 
     def get_breadcrumbs(self):
         return self.get_ancestors()

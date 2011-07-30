@@ -1,0 +1,26 @@
+{% extends 'livedocs/layout/layout.html' %}
+
+{% block results %}
+    Search for {{ query }}.<br/>
+    Found {{ found_count }} items:
+
+    <h1 class="b-results__header">Search results</h1>
+
+    <nav class="b-results__nav">
+        {% for item in items %}
+        <article class="b-results__item">
+            <div class="b-results__breadcrumbs">
+                {% for crumb in item.get_breadcrumbs %}
+                <span class="b-results__breadcrumbs-item">{{ crumb.title }}</span>
+                {% if not forloop.last %}
+                    <span class="b-results__breadcrumbs-separator">></span>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <a class="b-results__link" href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+        </article>
+        {% endfor %}
+    </nav>
+
+{% endblock %}
+
