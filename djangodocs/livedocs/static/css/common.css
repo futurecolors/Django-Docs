@@ -9,7 +9,7 @@
  * @colordef    #333        Text
  * @colordef    #0d35e1     Links
  * @colordef    #5517e0     Visited links
- * @colordef    #e74700     Hover links
+ * @colordef    #cf0202     Hover links
  */
 
 
@@ -52,7 +52,7 @@ a:visited {
 }
 a:active,
 a:hover {
-    color: #e74700;
+    color: #cf0202;
 }
 .g-systemlink:visited,
 .g-systemlink:active,

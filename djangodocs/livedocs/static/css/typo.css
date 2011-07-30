@@ -15,6 +15,65 @@
 .l-content {
     margin: 0px 25%;
 }
-.b-content {
-    
+.b-content {}
+
+
+/**
+ * @subsection  Headers
+ */
+
+.b-content h1 {
+    height: 1.07em;
+    padding-top: 0.4em;
+    font-size: 280%;
+}
+.b-content h2 {
+    height: 1.15em;
+    padding-top: 0.55em;
+    font-size: 240%;
+}
+.b-content h3 {
+    height: 1.1em;
+    padding-top: 0.9em;
+    font-size: 200%;
+}
+.b-content h4 {
+    height: 1.1em;
+    font-size: 180%;
+}
+.b-content h5 {
+    font-size: 140%;
+    font-weight: bolder;
+}
+
+
+/**
+ * @subsection  Text
+ */
+
+.b-content p {
+    margin-bottom: 1.54em;
+    line-height: 1.4;
+    font-size: 140%;
+}
+.b-content .highlight-python {
+    margin-bottom: 1.54em;
+    line-height: 1.42;
+    font-size: 140%;
+    font-family: courier;
+}
+.b-content dl {
+    line-height: 1.4;
+}
+.b-content dt {
+    font-size: 160%;
+}
+.b-content dd {
+    padding: 0px 0px 1.54em 2em;
+    font-size: 140%;
+}
+.b-content dt p,
+.b-content dd p,
+.b-content dd .highlight-python {
+    font-size: 100%;
 }
