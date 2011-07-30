@@ -57,10 +57,12 @@
     font-size: 140%;
 }
 .b-content .highlight-python {
-    margin-bottom: 1.54em;
+    margin: -0.5em -0.5em 1.04em;
+    padding:  0.5em;
     line-height: 1.42;
     font-size: 140%;
     font-family: courier;
+    background: #ecffd6;
 }
 .b-content dl {
     line-height: 1.4;
@@ -76,4 +78,194 @@
 .b-content dd p,
 .b-content dd .highlight-python {
     font-size: 100%;
+}
+
+
+/**
+ * @subsection  Pygments
+ */
+
+.b-content .c {
+    color: #999988;
+    font-style: italic;
+}
+.b-content .err {
+    background-color: #E3D2D2;
+    color: #A61717;
+}
+.b-content .k {
+    font-weight: bold;
+}
+.b-content .o {
+    font-weight: bold;
+}
+.b-content .cm {
+    color: #999988;
+    font-style: italic;
+}
+.b-content .cp {
+    color: #999999;
+    font-weight: bold;
+}
+.b-content .c1 {
+    color: #999988;
+    font-style: italic;
+}
+.b-content .cs {
+    color: #999999;
+    font-style: italic;
+    font-weight: bold;
+}
+.b-content .gd {
+    background-color: #FFDDDD;
+    color: #000000;
+}
+.b-content .ge {
+    font-style: italic;
+}
+.b-content .gr {
+    color: #AA0000;
+}
+.b-content .gh {
+    color: #999999;
+}
+.b-content .gi {
+    background-color: #DDFFDD;
+    color: #000000;
+}
+.b-content .go {
+    color: #888888;
+}
+.b-content .gp {
+    color: #555555;
+}
+.b-content .gs {
+    font-weight: bold;
+}
+.b-content .gu {
+    color: #AAAAAA;
+}
+.b-content .gt {
+    color: #AA0000;
+}
+.b-content .kc {
+    font-weight: bold;
+}
+.b-content .kd {
+    font-weight: bold;
+}
+.b-content .kp {
+    font-weight: bold;
+}
+.b-content .kr {
+    font-weight: bold;
+}
+.b-content .kt {
+    color: #445588;
+    font-weight: bold;
+}
+.b-content .m {
+    color: #009999;
+}
+.b-content .s {
+    color: #BB8844;
+}
+.b-content .na {
+    color: #008080;
+}
+.b-content .nb {
+    color: #999999;
+}
+.b-content .nc {
+    color: #445588;
+    font-weight: bold;
+}
+.b-content .no {
+    color: #008080;
+}
+.b-content .ni {
+    color: #800080;
+}
+.b-content .ne {
+    color: #990000;
+    font-weight: bold;
+}
+.b-content .nf {
+    color: #990000;
+    font-weight: bold;
+}
+.b-content .nn {
+    color: #555555;
+}
+.b-content .nt {
+    color: #000080;
+}
+.b-content .nv {
+    color: #008080;
+}
+.b-content .ow {
+    font-weight: bold;
+}
+.b-content .w {
+    color: #BBBBBB;
+}
+.b-content .mf {
+    color: #009999;
+}
+.b-content .mh {
+    color: #009999;
+}
+.b-content .mi {
+    color: #009999;
+}
+.b-content .mo {
+    color: #009999;
+}
+.b-content .sb {
+    color: #BB8844;
+}
+.b-content .sc {
+    color: #BB8844;
+}
+.b-content .sd {
+    color: #BB8844;
+}
+.b-content .s2 {
+    color: #BB8844;
+}
+.b-content .se {
+    color: #BB8844;
+}
+.b-content .sh {
+    color: #BB8844;
+}
+.b-content .si {
+    color: #BB8844;
+}
+.b-content .sx {
+    color: #BB8844;
+}
+.b-content .sr {
+    color: #808000;
+}
+.b-content .s1 {
+    color: #BB8844;
+}
+.b-content .ss {
+    color: #BB8844;
+}
+.b-content .bp {
+    color: #999999;
+}
+.b-content .vc {
+    color: #008080;
+}
+.b-content .vg {
+    color: #008080;
+}
+.b-content .vi {
+    color: #008080;
+}
+.b-content .il {
+    color: #009999;
 }
