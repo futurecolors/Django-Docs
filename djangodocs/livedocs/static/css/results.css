@@ -24,7 +24,13 @@
 .b-results__nav {}
 .b-results__item {
     min-height: 4em;
-    margin-bottom: 2em;
+    margin: 0px 0px 2em -0.5em;
+    padding:  0.5em;
+    border-left: 2px solid white;
+}
+.b-results__item_active {
+    background: #ffffe0;
+    border-color: #25911f;
 }
 .b-results__breadcrumbs {
     line-height: 1.4;
