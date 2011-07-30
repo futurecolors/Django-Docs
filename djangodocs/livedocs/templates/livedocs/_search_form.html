@@ -1,6 +1,6 @@
 <header class="b-header">
     <div class="l-wrapper">
-        <form action="/search" method="get" class="b-search">
+        <form action="{% url search current_version %}" method="get" class="b-search">
             {% for field in search_form.visible_fields %}
                 {{ field }}
             {% endfor %}
