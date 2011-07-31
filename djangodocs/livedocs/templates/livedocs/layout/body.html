@@ -7,17 +7,20 @@
 <!--[if IE 9 ]>   <html class="ie9 ie no-js" lang="ru"><![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--><html lang="ru" class="no-js"><!--<![endif]-->
 <head>
+    {% block meta %}
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
+    {% endblock %}
     <title>{% block title %}Django Docs{% endblock %}</title>
+
+
     <script type="text/javascript">
     var app = {};
     app.debugDisableJs = false;
     (function (location, className, app) {
         if (location.pathname != '/' && !app.debugDisableJs) {
             console.log(location.protocol+'//'+location.host+'/#'+location.pathname);
-            //location.replace(location.protocol+'//'+location.host+'/#'+location.pathname);
+            location.replace(location.protocol+'//'+location.host+'/#'+location.pathname);
         }
     })(window.location, document.documentElement.className, app);
     </script>

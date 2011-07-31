@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     (r'^(robots.txt)$', 'django.views.static.serve', {'document_root': STATIC_ROOT}),
     (r'^(humans.txt)$', 'django.views.static.serve', {'document_root': STATIC_ROOT}),
 
-    url(r'^$', IndexView.as_view(template_name='livedocs/index.html')),
+    url(r'^$', IndexView.as_view()),
     url(r'^admin/', include(admin.site.urls)),
     url(r'(?P<current_version>[^/]+?)/', include('livedocs.urls')),
     (r'^data/(?P<path>.*)', 'django.views.static.serve', {'document_root': os.path.join(ROOT_PATH, 'livedocs/data'),

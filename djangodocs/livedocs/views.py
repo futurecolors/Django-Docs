@@ -12,6 +12,7 @@ from models import Item, Version
 LIMIT_RESULTS = 10
 
 
+
 def ajax_headers(view_func):
     '''Pass page title or redirect in X-Ajax-* headers for hash-based urls'''
     def _add_header(response, template_variable, header_name):
@@ -84,11 +85,17 @@ class BaseLiveView(View):
 
     
 class IndexView(TemplateView):
+    template_name = 'livedocs/index.html'
+
     def get_context_data(self, **kwargs):
+        version = Version.objects.get(is_default=True)
         return {
-            'body_template': 'livedocs/layout/body.html'
-        }    
-    
+            'body_template': 'livedocs/layout/body.html',
+            'default_version_url': reverse('index', kwargs={'current_version': version.name}),
+            'current_version': version.name
+        }
+
+
 class SearchView(BaseLiveView):
     @method_decorator(render_to('livedocs/search.html'))
     def get(self, request, *args, **kwargs):

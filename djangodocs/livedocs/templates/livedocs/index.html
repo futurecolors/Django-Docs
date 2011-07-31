@@ -1,4 +1,13 @@
 {% extends 'livedocs/layout/layout.html' %}
-
-{% block search %}
+{% block meta %}
+<noscript>
+    <meta http-equiv="refresh" content="0; url={{ default_version_url }}">
+</noscript>
+<script>
+    if (location.pathname == '/') {
+        location.replace(location.protocol+'//'+location.host+'/#/{{ current_version }}/');
+    }
+</script>
 {% endblock %}
+
+{% block search %}{% endblock %}
