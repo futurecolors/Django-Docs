@@ -1,0 +1,29 @@
+/**
+ * Dashboard
+ *
+ * @package     djangodocs
+ * @version     1.0
+ * @author      Artem Golikov <art@futurecolors.ru>
+ * @copyright   Future Colors
+ */
+
+
+/**
+ * @section     Dashboard
+ */
+
+.b-dashboard {}
+.b-dashboard__section {
+    display: inline-block;
+    width: 24%;
+    vertical-align: top;
+}
+.b-dashboard__section-link {
+    font-size: 160%;
+}
+.b-dashboard__item {
+    padding-left: 2em;
+}
+.b-dashboard__item-link {
+    font-size: 120%;
+}

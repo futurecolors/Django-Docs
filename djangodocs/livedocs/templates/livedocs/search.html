@@ -1,18 +1,46 @@
 {% extends 'livedocs/layout/layout.html' %}
+
+
 {% load mptt_tags %}
+
 
 {% block title %} {{ title|striptags }} {% endblock %}
 
-{% block content %}
 
-    {% if item_descendants %}
-    {% recursetree item_descendants %}
-        <h1>{{ node.title }}</h1>
-        {{ node.content|safe }}
-        {% if not node.is_leaf_node %}
-            {{ children }}
+{% block content %}
+    <section class="l-content b-content">
+        {% if item_descendants %}
+        {% recursetree item_descendants %}
+            <h1>{{ node.title }}</h1>
+            {{ node.content|safe }}
+            {% if not node.is_leaf_node %}
+                {{ children }}
+            {% endif %}
+        {% endrecursetree %}
         {% endif %}
-    {% endrecursetree %}
-    {% endif %}
-    
+    </section>
+{% endblock %}
+
+
+{% block dashboard %}
+    {% comment %}
+    <section class="b-dashboard">
+        {% for root_item in root_items %}
+        <div class="b-dashboard__section">
+            <a href="{{ root_item.get_absolute_url }}"
+               class="b-dashboard__section-link">
+                {{ root_item.title }}
+            </a>
+            {% for secondary_item in root_item.get_children %}
+             <div class="b-dashboard__item">
+                <a href="{{ secondary_item.get_absolute_url }}"
+                   class="b-dashboard__item-link">
+                    {{ secondary_item.title }}
+                </a>
+             </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </section>
+    {% endcomment %}
 {% endblock %}
