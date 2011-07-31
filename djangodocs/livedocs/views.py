@@ -10,7 +10,7 @@ from forms import SearchForm
 from models import Item, Version
 
 
-LIMIT_RESULTS = 5
+LIMIT_RESULTS = 7
 
 
 def ajax_headers(view_func):
