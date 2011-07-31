@@ -8,3 +8,4 @@ yolk
 lxml==2.3
 pyquery==1.0
 MySQL-python
+-e git+https://github.com/piumosso/django-sphinx@020ca411834d4fccc1abc2f428ec248bce2366be#egg=djangosphinx

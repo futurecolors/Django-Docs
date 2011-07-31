@@ -4,6 +4,7 @@ from django.db.models.query_utils import Q
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic.base import View, RedirectView
+from djangosphinx.models import SphinxQuerySet, SearchError
 from forms import SearchForm
 from models import Item, Version
 
@@ -47,9 +48,15 @@ class BaseLiveView(View):
     def get_results(self, query, current_version, selected_item=None):
         if not query:
             return {}
-            
-        items = Item.objects.filter(Q(version__name=current_version),
-                            Q(title__icontains=query) | Q(content__icontains=query))[:LIMIT_RESULTS]
+
+        version = Version.objects.get(name=current_version)
+        try:
+            sphinx_result = SphinxQuerySet(index='items').query(query)
+            result_items_list = [r for r in sphinx_result if r.version == version]
+            items = result_items_list[:LIMIT_RESULTS]
+        except SearchError:
+            items = Item.objects.filter(Q(version=version),
+                                Q(title__icontains=query) | Q(content__icontains=query))[:LIMIT_RESULTS]
 
         for item in items:
             if item == selected_item or not selected_item:
@@ -58,6 +65,7 @@ class BaseLiveView(View):
 
         return {'items': items,
                 'found_count': items.count()}
+
     
 class SearchView(BaseLiveView):
     @method_decorator(render_to('livedocs/search.html'))

@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import permalink
+from djangosphinx.models import SphinxSearch
 from mptt.models import MPTTModel
 
 
@@ -23,6 +24,10 @@ class Item(MPTTModel, models.Model):
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children', verbose_name=u'Parent')
     version = models.ForeignKey(Version)
     is_root = models.BooleanField('Is root page', default=False)
+
+    search = SphinxSearch(index='items',
+                          weights={'title': 100,
+                                   'content': 80})
 
     def __unicode__(self):
         return self.slug

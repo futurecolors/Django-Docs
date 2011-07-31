@@ -92,6 +92,8 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'odh3_i^28jj3vk02=u(ef=%9sn$-w00rtf0ppozlxp29jy3==3'
 
+SPHINX_API_VERSION = 0x116
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -120,7 +122,7 @@ INSTALLED_APPS = (
     
     'compressor',
     'mptt',
-
+    'djangosphinx',
     'south',
 
     'django.contrib.auth',
