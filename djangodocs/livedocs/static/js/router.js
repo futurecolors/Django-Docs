@@ -37,10 +37,10 @@ app.router = (function () {
                     changePageTitle(jqXHR);
                     if (router.redrawSearch) {
                         $('#js-content').html(html);
+                        $('#js-search-form input:first').focus();
                     } else {
                         $('#js-main-content').html($(html).find('#js-main-content').html());
                         $('#js-version').html($(html).find('#js-version').html());
-                        console.log($(html).find('#js-version').html());
                     }
                     router.redrawSearch = true;
                 }

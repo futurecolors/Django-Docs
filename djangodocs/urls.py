@@ -9,8 +9,9 @@ from settings import STATIC_ROOT, ROOT_PATH
 
 admin.autodiscover()
 
+urlpatterns = staticfiles_urlpatterns()
 
-urlpatterns = patterns('',
+urlpatterns += patterns('',
     # Static
     (r'^(favicon.ico)$', 'django.views.static.serve', {'document_root': STATIC_ROOT}),
     (r'^(robots.txt)$', 'django.views.static.serve', {'document_root': STATIC_ROOT}),
@@ -24,4 +25,4 @@ urlpatterns = patterns('',
 
 )
 
-urlpatterns += staticfiles_urlpatterns()
+

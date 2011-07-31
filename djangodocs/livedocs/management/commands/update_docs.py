@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from optparse import make_option
+import shutil
 import re
 from django.db import connections
 import os
@@ -11,6 +12,8 @@ from lxml import etree
 from pyquery import PyQuery as pq
 from livedocs.models import Item, ItemAnchor
 from livedocs.models import Version
+from settings import STATIC_ROOT
+from settings import STATIC_URL
 
 
 class Command(BaseCommand):
@@ -104,6 +107,7 @@ class Command(BaseCommand):
 
         file = open(os.path.join(ROOT_PATH, self.LOCAL_PATH, '_build/singlehtml/contents.html'))
         document = lxml.html.document_fromstring(file.read())
+        document = self.import_images(document)
         content = document.get_element_by_id('contents')
 
         print 'Updating db...'
@@ -209,11 +213,18 @@ class Command(BaseCommand):
         section.content.replace('\n</pre>', '</pre>')
 
 
-    def import_images(self):
-        """Copy images to static root"""
+    def import_images(self, document):
+        """Copy images to static root and fix img src"""
         SRC = os.path.join(ROOT_PATH, 'data/_build/singlehtml/_images')
-        DST = os.path.join(STATIC_ROOT, '_images')
-        shutil.copytree(SRC, DST)
+        DST = os.path.join(STATIC_ROOT)
+        args = ['cp', SRC, DST, '-R']
+        subprocess.call(args)
+
+        for element, attribute, link, pos in document.iterlinks():
+            if attribute == "src":
+                 new_src = os.path.join(STATIC_URL,link)
+                 element.set('src', new_src)
+        return document
 
 
     def create_paths(self):
@@ -228,7 +239,7 @@ class Command(BaseCommand):
 
     def replace_links(self):
         """ Replace links concern many anchors """
-        print 'Replace links ...'
+        print 'Replacing links ...'
 
         def replacer(match):
             link_parts = match.groups()[0].split('#')
