@@ -24,7 +24,7 @@ By the way, we have already made useful jQuery cheatsheet: http://futurecolors.r
 
 ## Install guide (you may do this in virtualenv)
 
-1. ```git git://github.com/futurecolors/Django-Docs.git```
+1. ```git clone git://github.com/futurecolors/Django-Docs.git```
 2. ```cd Django-Docs```
 3. ```pip install -r pip_requirements.txt```
 4. ```cd djangodocs/```
