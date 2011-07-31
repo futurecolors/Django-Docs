@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from optparse import make_option
+import re
 from django.db import connections
 import os
 import subprocess
@@ -45,6 +46,7 @@ class Command(BaseCommand):
         )
     version = None
 
+    
     def handle(self, *args, **options):
         if not 'ver' in options or not options['ver']:
             raise CommandError('Enter version')
@@ -70,7 +72,7 @@ class Command(BaseCommand):
 #                self._download_docs()
 #                self._make_html()
             self._parse_html_and_update_db()
-            self.create_paths()
+
 
     def delete_version(self):
         print 'Deleting version {0} ...'.format(self.version.name)
@@ -79,18 +81,23 @@ class Command(BaseCommand):
         except IndexError:
             pass
 
+
     def _download_docs(self):
         """ Download latest docs from svn repository """
         print 'Downloading {0} docs...'.format(self.version.name)
+
         svn_url = self.SVN_TRUNK if self.version.name == 'dev' else self.SVN_TAG.format(self.version.name)
         args = ['svn', 'co', os.path.join(svn_url, self.PATH_TO_DOCS), self.LOCAL_PATH]
         subprocess.call(args)
 
+
     def _make_html(self):
         """ Process RST with Sphinx documentor as signle file """
         print 'Print processing RST...'
+
         args = ['make', 'singlehtml']
         subprocess.call(args, cwd = self.LOCAL_PATH)
+
 
     def _parse_html_and_update_db(self):
         print 'Parsing HTML...'
@@ -102,37 +109,38 @@ class Command(BaseCommand):
         print 'Updating db...'
         self.parse_section(content)
         self.create_paths()
+        self.replace_links()
 
-    def parse_section(self, parent_element, parent_section=None):
+
+    def parse_section(self, parent_element, parent_section=None, additional_anchors=[]):
         """ Parsing section """
 
-        xxx = parent_element.attrib.get('id', '') == 's-module-django.contrib.gis.admin'
-            
         section = Item(version=self.version)
         section.content = ''
         if parent_section:
             section.parent = parent_section
 
         subitems = []
-        anchors = []
+        anchors = [] + additional_anchors
+        section_elements_anchors = []
 
         # Iterating over child nodes
         for children_element in parent_element:
-            if xxx:
-                print children_element
-                
+
             # Do we have any subsections?
             children_element_classes = set(children_element.attrib.get('class', '').split(' '))
             
             if self.SUB_ITEMS_CLASSES & children_element_classes:
 
                 subitems.append(children_element)
+                section_elements_anchors.append(children_element.attrib.get('id', None))
 
             else:
 
                 # Filling section
                 if children_element.tag in self.HEADER_TAGS:
-                    section.title = children_element.text_content().encode('utf8') or None
+                    title_content = children_element.text_content().encode('utf8')
+                    section.title = title_content.replace('¶', '')
                 elif children_element.tag == 'span' and not children_element.text_content():
                     anchors.append(children_element.attrib['id'])
                 else:
@@ -151,10 +159,8 @@ class Command(BaseCommand):
             for anchor in anchors:
                 ItemAnchor(name=anchor, item=section).save()
 
-        if is_section_empty:
-            if len(subitems) != len(anchors):
-                print anchors
-        for item in subitems:
+        # Save subitems
+        for i, item in enumerate(subitems):
             if is_section_empty:
                 if parent_section:
                     parent_for_item = parent_section
@@ -162,7 +168,16 @@ class Command(BaseCommand):
                     parent_for_item = section
             else:
                 parent_for_item = section
-            self.parse_section(item, parent_for_item)
+
+            # Pick up anchors for subitem
+            subsection_additional_anchors = []
+            if section_elements_anchors[i]:
+                subsection_additional_anchors.append(section_elements_anchors[i])
+            if is_section_empty and len(subitems) == len(anchors):
+                subsection_additional_anchors.append(anchors[i])
+
+            self.parse_section(item, parent_for_item,
+                               additional_anchors=subsection_additional_anchors)
 
 
     def import_images(self):
@@ -174,10 +189,36 @@ class Command(BaseCommand):
 
     def create_paths(self):
         """Filling site paths at once"""
+        print 'Filling paths ...'
+
         for section in Item.objects.all():
             ancestors = section.get_ancestors()
             section.path = '/'.join([a.slug for a in ancestors][2:] + [section.slug])
             section.save()
+
+
+    def replace_links(self):
+        """ Replace links concern many anchors """
+        print 'Replace links ...'
+
+        count = [0, 0]
+
+        def replacer(match):
+            link = match.groups()[0].strip('#')
+            anchors = ItemAnchor.objects.filter(name=link, item__version=self.version)
+            if anchors:
+                count[0] += 1
+                new_link = anchors[0].item.get_absolute_url()
+                return 'href="{0}"'.format(new_link)
+            else:
+                count[1] += 1
+                return ''
+
+        for section in Item.objects.all():
+            section.content = re.sub(r'href="([#\w\.]+)"', replacer, section.content)
+            section.save()
+
+        print count
 
 
 
