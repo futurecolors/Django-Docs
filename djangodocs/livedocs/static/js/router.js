@@ -1,6 +1,6 @@
 app.router = (function () {
     var router = {
-        loadedSectionHtml: ''
+        redrawSearch: true
     }
 
     var blockHashChangeEvent = false;
@@ -35,7 +35,14 @@ app.router = (function () {
                 success: function(html, text, jqXHR) {
                     changeHashWithNoReload(jqXHR);
                     changePageTitle(jqXHR);
-                    $('#js-content').html(html);
+                    if (router.redrawSearch) {
+                        $('#js-content').html(html);
+                    } else {
+                        $('#js-main-content').html($(html).find('#js-main-content').html());
+                        $('#js-version').html($(html).find('#js-version').html());
+                        console.log($(html).find('#js-version').html());
+                    }
+                    router.redrawSearch = true;
                 }
             });
         }

@@ -1,6 +1,6 @@
 jQuery.fn.liveSearch = function(config){
     var config = jQuery.extend({
-            typeDelay: 400
+            typeDelay: 600
         }, config);
 
     var timer;
@@ -13,6 +13,7 @@ jQuery.fn.liveSearch = function(config){
        var that = this;
        timer = setTimeout(function(){
            var form = $(that).closest('form');
+           app.router.redrawSearch = false;
            jQuery.bbq.pushState('#' + form.attr('action').split(location.host).pop() + '?' + form.serialize());
        }, config.typeDelay);
     });
