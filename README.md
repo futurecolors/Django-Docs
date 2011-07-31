@@ -28,21 +28,7 @@ By the way, we have already made useful jQuery cheatsheet: http://futurecolors.r
 2. ```cd Django-Docs```
 3. ```pip install -r pip_requirements.txt```
 4. ```cd djangodocs/```
-5. Change in settings.py DB settings:
-``` python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-	'OPTIONS': {
-   		'init_command': 'SET storage_engine=INNODB',
-	}
-    }
-}
-```
+5. Change in settings.py DB settings.
 6. ```python manage.py syncdb```
 7. ```python manage.py migrate```
 8. For generate livedocs DB (it will download and parse documentation from django svn):

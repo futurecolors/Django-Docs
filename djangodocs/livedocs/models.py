@@ -52,7 +52,7 @@ class Item(MPTTModel, models.Model):
 
 
 class ItemAnchor(models.Model):
-    name = models.CharField('Content section anchor name', max_length=1000)
+    name = models.CharField('Content section anchor name', max_length=500)
     item = models.ForeignKey(Item)
 
     class Meta:
