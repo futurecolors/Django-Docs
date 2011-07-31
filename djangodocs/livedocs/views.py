@@ -1,19 +1,34 @@
+import urllib
 from annoying.decorators import render_to
 from django.core.urlresolvers import resolve, reverse
 from django.db.models.query_utils import Q
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.utils.decorators import method_decorator
-from django.views.generic.base import View, RedirectView
+from django.views.generic.base import View, RedirectView, TemplateView
 from djangosphinx.models import SphinxQuerySet, SearchError
 from forms import SearchForm
 from models import Item, Version
 
 LIMIT_RESULTS = 10
 
-class RedirectToDefaultVersionView(RedirectView):
-    def get_redirect_url(self, **kwargs):
-        version = Version.objects.get(is_default=True)
-        return reverse('search', kwargs={'current_version': version.name})
+
+def ajax_headers(view_func):
+    '''Pass page title or redirect in X-Ajax-* headers for hash-based urls'''
+    def _add_header(response, template_variable, header_name):
+        '''Take header value from template and put in reponse header'''
+        header_value = response.context_data.get(template_variable, None)
+        if header_value:
+            response[header_name] = urllib.quote(header_value.encode('utf-8'))
+        return response
+
+
+    def _wrapped_view_func(request, *args, **kwargs):
+        response = view_func(request, *args, **kwargs)
+        if request.is_ajax():
+            response = _add_header(response, 'ajax_redirect', 'X-Ajax-Redirect')
+            response = _add_header(response, 'title', 'X-Ajax-PageTitle')
+        return response
+    return _wrapped_view_func
 
 
 class BaseLiveView(View):
@@ -43,7 +58,8 @@ class BaseLiveView(View):
         return {'search_form': search_form,
                 'query': query,
                 'current_version': kwargs['current_version'],
-                'avaliable_versions': avaliable_versions}
+                'avaliable_versions': avaliable_versions,
+                'body_template': 'livedocs/layout/ajax.html' if request.is_ajax() else 'livedocs/layout/body.html'}
 
     def get_results(self, query, current_version, selected_item=None):
         if not query:
@@ -67,6 +83,12 @@ class BaseLiveView(View):
                 'found_count': items.count()}
 
     
+class IndexView(TemplateView):
+    def get_context_data(self, **kwargs):
+        return {
+            'body_template': 'livedocs/layout/body.html'
+        }    
+    
 class SearchView(BaseLiveView):
     @method_decorator(render_to('livedocs/search.html'))
     def get(self, request, *args, **kwargs):
@@ -77,7 +99,8 @@ class SearchView(BaseLiveView):
         
         if 'found_count' in context:
             context['item'] = context['items'][0]
-            context['item_descndants'] = context['item'].get_descendants(include_self=True)
+            context['item_descendants'] = context['item'].get_descendants(include_self=True)
+            context['title'] = context['item'].title
 
         return context
 
@@ -89,7 +112,7 @@ class ItemView(BaseLiveView):
 
         context = self.get_context(request, *args, **kwargs)
         context['item'] = get_object_or_404(Item, path=kwargs['item_path'])
-        context['item_descndants'] = context['item'].get_descendants(include_self=True)
+        context['item_descendants'] = context['item'].get_descendants(include_self=True)
         context.update(self.get_results(context['query'], context['current_version'], context['item']))
 
         return context

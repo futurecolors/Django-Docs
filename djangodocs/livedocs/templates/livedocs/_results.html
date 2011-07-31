@@ -15,7 +15,7 @@
                 {% endif %}
                 {% endfor %}
             </div>
-            <a class="b-results__link" href="{{ item.get_absolute_url }}?query={{ query }}">{{ item.title }}</a>
+            <a class="b-results__link js-ajax" href="{{ item.get_absolute_url }}?query={{ query }}">{{ item.title }}</a>
         </article>
         {% endfor %}
     </nav>

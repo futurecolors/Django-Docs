@@ -11,6 +11,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
     <title>{% block title %}Django Docs{% endblock %}</title>
+    <script type="text/javascript">
+    var app = {};
+    app.debugDisableJs = false;
+    (function (location, className, app) {
+        if (location.pathname != '/' && !app.debugDisableJs) {
+            console.log(location.protocol+'//'+location.host+'/#'+location.pathname);
+            //location.replace(location.protocol+'//'+location.host+'/#'+location.pathname);
+        }
+    })(window.location, document.documentElement.className, app);
+    </script>
 
     {% compress css %}
     <link rel="stylesheet" href="{{STATIC_URL}}css/reset.css" type="text/css">
@@ -22,6 +32,7 @@
     <link rel="stylesheet" href="{{STATIC_URL}}css/results.css" type="text/css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/contents.css" type="text/css">
     {% endcompress %}
+
 </head>
 <body class="{% block bodyclass %}{% endblock %}">
     {% include 'livedocs/layout/metrika.html' %}
@@ -29,9 +40,10 @@
     {% block layout %}{% endblock %}
 
     {% compress js %}
-    <link rel="stylesheet" href="{{STATIC_URL}}js/libs/jquery-1.6.2.js" type="text/css">
-    <link rel="stylesheet" href="{{STATIC_URL}}js/plugins/jquery.bbq.js" type="text/css">
-    <link rel="stylesheet" href="{{STATIC_URL}}js/plugins/jquery.form.js" type="text/css">
+    <script type="text/javascript" src="{{STATIC_URL}}js/libs/jquery-1.6.2.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/plugins/jquery.bbq.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/plugins/jquery.form.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/router.js"></script>
     {% endcompress %}
 </body>
 </html>

@@ -1,8 +1,11 @@
-{% extends 'livedocs/layout/body.html' %}
+{% extends body_template %}
 {% load toc %}
 
 {% block layout %}
+<div id="js-content">
+    {% block search %}
     {% include 'livedocs/_search_form.html' %}
+    {% endblock %}
     <div class="l-wrapper l-header-spacer b-section">
         <aside class="l-results b-results">
             {% block results %}
@@ -19,4 +22,5 @@
             {% endblock %}
         </section>
     </div>
+</div>
 {% endblock %}
