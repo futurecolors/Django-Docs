@@ -1,0 +1,13 @@
+
+<section class="b-dashboard">
+    {% for panel in panels %}
+    <div class="b-dashboard__panel">
+        {% for item in panel %}
+        <article class="b-dashboard__section">
+            <h1 class="b-dashboard__section-header">{{ item.title }}</h1>
+            {{ item.content|safe }}
+        </article>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</section>

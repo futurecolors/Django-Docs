@@ -116,9 +116,6 @@ class SearchView(BaseLiveView):
             context['title'] = 'No results'
         #raise Exception(context['document_items'])
 
-        dashboard_root_item = Item.objects.get(path='index', version__name=context['current_version'])
-        context['root_items'] = dashboard_root_item.get_descendants()
-
         return context
 
 

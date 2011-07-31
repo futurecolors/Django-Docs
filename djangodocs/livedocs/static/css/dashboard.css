@@ -12,18 +12,22 @@
  * @section     Dashboard
  */
 
-.b-dashboard {}
+.b-dashboard {
+}
+.b-dashboard__panel {
+    float: left;
+    width: 39%;
+    padding: 5%
+}
+.b-dashboard .b-dashboard__panel:first-child {
+    margin-top: 2em;
+}
 .b-dashboard__section {
-    display: inline-block;
-    width: 24%;
-    vertical-align: top;
+    margin-bottom: 2em;
+    line-height: 1.4;
+    font-size: 140%;
 }
-.b-dashboard__section-link {
-    font-size: 160%;
-}
-.b-dashboard__item {
-    padding-left: 2em;
-}
-.b-dashboard__item-link {
-    font-size: 120%;
+.b-dashboard__section-header {
+    font-size: 142%;
+    padding-bottom: 1em;
 }

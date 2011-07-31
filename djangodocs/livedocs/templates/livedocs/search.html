@@ -1,7 +1,12 @@
 {% extends 'livedocs/layout/layout.html' %}
+
+
 {% load mptt_tags %}
+{% load dashboard %}
+
 
 {% block title %} {{ title|striptags }} {% endblock %}
+
 
 {% block content %}
     <section class="l-content b-content">
@@ -17,25 +22,7 @@
     </section>    
 {% endblock %}
 
+
 {% block dashboard %}
-    {% comment %}
-    <section class="b-dashboard">
-        {% for root_item in root_items %}
-        <div class="b-dashboard__section">
-            <a href="{{ root_item.get_absolute_url }}"
-               class="b-dashboard__section-link">
-                {{ root_item.title }}
-            </a>
-            {% for secondary_item in root_item.get_children %}
-             <div class="b-dashboard__item">
-                <a href="{{ secondary_item.get_absolute_url }}"
-                   class="b-dashboard__item-link">
-                    {{ secondary_item.title }}
-                </a>
-             </div>
-            {% endfor %}
-        </div>
-        {% endfor %}
-    </section>
-    {% endcomment %}
+    {% dashboard %}
 {% endblock %}

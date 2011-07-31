@@ -63,6 +63,12 @@
     font-size: 140%;
     background: #e2eef6;
 }
+
+
+/**
+ * @subsection  Lists
+ */
+
 .b-content ul {
     list-style: disc;
 }
@@ -78,6 +84,12 @@
 .b-content li * {
     font-size: 100%!important;
 }
+
+
+/**
+ * @subsection  Heghlight
+ */
+
 .b-content .highlight-python,
 .b-content .highlight-html,
 .b-content .highlight {
@@ -107,6 +119,12 @@
 .m-search-focus .b-content .highlight {
     background: #fffff0;
 }
+
+
+/**
+ * @subsection  Defenition lists
+ */
+
 .b-content dl {
     line-height: 1.4;
 }
@@ -124,6 +142,12 @@
 .b-content dd:last-child :last-child {
     margin-bottom: 0px;
 }
+
+
+/**
+ * @subsection  Version added
+ */
+
 .b-content .versionadded {
     font-size: 120%;
     font-style: italic;
@@ -132,6 +156,12 @@
 .b-content .versionadded a {
     color: #11721a!important;
 }
+
+
+/**
+ * @subsection  Warnings
+ */
+
 .b-content .admonition {
     padding-left: 60px;
     background: url(../images/warning.png) 0px 0px no-repeat;
@@ -140,6 +170,26 @@
     margin-bottom: -0.2em;
     padding-top: 0.7em;
     font-weight: bolder;
+}
+
+
+/**
+ * @subsection  Tables
+ */
+
+.b-content table {
+    width: 100%;
+    margin: 1.54em 0px;
+    line-height: 1.4;
+    font-size: 140%;
+}
+.b-content td,
+.b-content th {
+    text-align: left;
+    padding: 0.6em 1em;
+}
+.b-content th {
+    background: #e2eef6;
 }
 
 
