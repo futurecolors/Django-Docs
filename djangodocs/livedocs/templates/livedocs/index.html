@@ -4,7 +4,7 @@
     <meta http-equiv="refresh" content="0; url={{ default_version_url }}">
 </noscript>
 <script>
-    if (location.pathname == '/') {
+    if (location.pathname == '/' && location.hash == '') {
         location.replace(location.protocol+'//'+location.host+'/#/{{ current_version }}/');
     }
 </script>

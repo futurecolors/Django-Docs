@@ -19,7 +19,6 @@
     app.debugDisableJs = false;
     (function (location, className, app) {
         if (location.pathname != '/' && !app.debugDisableJs) {
-            console.log(location.protocol+'//'+location.host+'/#'+location.pathname);
             location.replace(location.protocol+'//'+location.host+'/#'+location.pathname);
         }
     })(window.location, document.documentElement.className, app);
