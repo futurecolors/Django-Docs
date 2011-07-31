@@ -111,7 +111,7 @@ class Command(BaseCommand):
         content = document.get_element_by_id('contents')
 
         print 'Updating db...'
-        
+
         self.parse_section(content)
         self.create_paths()
         self.replace_links()
@@ -210,7 +210,7 @@ class Command(BaseCommand):
 
     def prepare_section(self, section):
         section.title = section.title.replace('¶', '')
-        section.content.replace('\n</pre>', '</pre>')
+        section.content = section.content.replace('\n</pre>', '</pre>')
 
 
     def import_images(self, document):
@@ -242,8 +242,10 @@ class Command(BaseCommand):
         print 'Replacing links ...'
 
         def replacer(match):
-            link_parts = match.groups()[0].split('#')
+            original_link = match.groups()[0]
+            link_parts = original_link.split('#')
             link = link_parts[1] if len(link_parts) > 1 else link_parts[0]
+
             anchors = ItemAnchor.objects.filter(name=link, item__version=self.version)
             if anchors:
                 new_link = anchors[0].item.get_absolute_url()
@@ -255,10 +257,10 @@ class Command(BaseCommand):
                     new_link = '{0}#{1}'.format(items[0].get_absolute_url(), link)
                     return 'href="{0}"'.format(new_link)
                 else:
-                    return ''
+                    return original_link
 
         for section in Item.objects.all():
-            section.content = re.sub(r'href="([#\w\.]+)"', replacer, section.content)
+            section.content = re.sub(r'href="(.+)"', replacer, section.content)
             section.save()
 
 
