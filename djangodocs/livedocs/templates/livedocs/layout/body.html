@@ -36,6 +36,9 @@
     <link rel="stylesheet" href="{{STATIC_URL}}css/dashboard.css" type="text/css">
     {% endcompress %}
 
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 </head>
 <body class="{% block bodyclass %}{% endblock %}">
     {% include 'livedocs/layout/metrika.html' %}
