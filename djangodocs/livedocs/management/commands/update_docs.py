@@ -26,7 +26,7 @@ class Command(BaseCommand):
         make_option('--ver',
                     action='store',
                     dest='ver',
-                    default=None,
+                    default='1.3',
                     help='Documentation version'),
         make_option('--delete',
                     action='store_true',
@@ -36,7 +36,7 @@ class Command(BaseCommand):
         make_option('--default',
                     action='store_true',
                     dest='default',
-                    default=False,
+                    default=True,
                     help='Is default version'),
         make_option('--only-parse',
                     action='store_true',
@@ -60,7 +60,7 @@ class Command(BaseCommand):
             if self.version:
                 self.delete_version()
             else:
-                raise CommandError('You are delete non exists version')
+                raise CommandError('You are deleting non-existent version')
         else:
             if self.version:
                 self.delete_version()
