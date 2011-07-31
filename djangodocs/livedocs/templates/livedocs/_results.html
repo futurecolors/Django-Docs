@@ -1,7 +1,10 @@
-{% if found_count %}
+{% if query %}
     <h1 class="b-results__header">
-        Search results
-        ({{ found_count }})
+        {% if found_count %}
+        Search results ({{ found_count }} first)
+        {% else %}
+        No matches found
+        {% endif %}
     </h1>
 
     <nav class="b-results__nav">
@@ -17,6 +20,7 @@
             </div>
             <a class="b-results__link js-ajax" href="{{ item.get_absolute_url }}?query={{ query }}">{{ item.title }}</a>
         </article>
+        {% empty %}
         {% endfor %}
     </nav>
 {% endif %}

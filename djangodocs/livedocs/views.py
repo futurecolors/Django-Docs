@@ -105,11 +105,15 @@ class SearchView(BaseLiveView):
 
         context = self.get_context(request, *args, **kwargs)
         context.update(self.get_results(context['query'], context['current_version']))
-        
-        if 'found_count' in context:
+
+        if not context['query']:
+            context['title'] = 'Search'
+        elif context['found_count']:
             context['item'] = context['items'][0]
             context['item_descendants'] = context['item'].get_descendants(include_self=True)
             context['title'] = context['item'].title
+        else:
+            context['title'] = 'No results'
 
         return context
 
