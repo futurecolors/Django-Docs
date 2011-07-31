@@ -12,7 +12,6 @@ from models import Item, Version
 LIMIT_RESULTS = 10
 
 
-
 def ajax_headers(view_func):
     '''Pass page title or redirect in X-Ajax-* headers for hash-based urls'''
     def _add_header(response, template_variable, header_name):
@@ -114,7 +113,6 @@ class SearchView(BaseLiveView):
             context['title'] = context['item'].title
         else:
             context['title'] = 'No results'
-        #raise Exception(context['document_items'])
 
         dashboard_root_item = Item.objects.get(path='index', version__name=context['current_version'])
         context['root_items'] = dashboard_root_item.get_descendants()

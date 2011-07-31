@@ -20,6 +20,14 @@ app.router = (function () {
             document.title = decodeURIComponent(title);
         }
     }
+
+    function scrollContent(newHash) {
+        var parts = newHash.split('/');
+        var lastId = parts[parts.length-2];
+        if ($('#'+ lastId).length) {
+            $.scrollTo($('#'+ lastId), {offset:{ top:-100}});
+        }
+    }
     
     router.hashChangeCallback = function (event) {
         if (blockHashChangeEvent) {
@@ -42,10 +50,7 @@ app.router = (function () {
                         $('#js-main-content').html($(html).find('#js-main-content').html());
                         $('#js-version').html($(html).find('#js-version').html());
                     }
-                    var parts = newHash.split('/');
-                    var lastId = parts[parts.length-2];
-                    console.log(lastId);
-                    $.scrollTo($('#'+ lastId), {offset:{ top:-100}});
+                    scrollContent(newHash)
                     router.redrawSearch = true;
                 }
             });

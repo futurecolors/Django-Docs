@@ -6,7 +6,13 @@
     <ul class="b-contents__list">
         {% recursetree toc %}
             <li class="b-contents__item">
-                <a class="b-contents__link" href="#">{{ node.title }}</a>
+                {% if node == item %}
+                    {{ node.title }}
+                {% else %}
+                    <a class="b-contents__link"
+                       href="#{{ node.get_absolute_url }}{% if query %}?query={{ query }}{% endif %}">
+                       {{ node.title }}</a>
+                {% endif %}
                 {% if not node.is_leaf_node %}
                     <ul class="b-contents__list">
                         {{ children }}
