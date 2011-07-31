@@ -16,6 +16,20 @@ class RedirectToDefaultVersionView(RedirectView):
 
 
 class BaseLiveView(View):
+    def _get_available_docs_versions(self, request, *args, **kwargs):
+        """ All available versions of this page (1.3 1.2 dev etc)"""
+        match = resolve(request.path)
+        avaliable_versions = Version.objects.all().order_by('name')
+
+        for version in avaliable_versions:
+            params = kwargs.copy()
+            params['current_version'] = version.name
+            version.url = reverse(match.url_name, kwargs=params)
+            if version.name == kwargs['current_version']:
+                version.active = True
+
+        return avaliable_versions
+
     def get_context(self, request, *args, **kwargs):
         search_form = SearchForm(request.GET)
         if search_form.is_valid():
@@ -23,14 +37,7 @@ class BaseLiveView(View):
         else:
             query = None
 
-        match = resolve(request.path)
-        avaliable_versions = Version.objects.all().order_by('name')
-        for version in avaliable_versions:
-            params = kwargs.copy()
-            params['current_version'] = version.name
-            version.url = reverse(match.url_name, kwargs=params)
-            if version.name == kwargs['current_version']:
-                version.selected = True
+        avaliable_versions = self._get_available_docs_versions(request, *args, **kwargs)
 
         return {'search_form': search_form,
                 'query': query,
@@ -60,19 +67,21 @@ class SearchView(BaseLiveView):
         context = self.get_context(request, *args, **kwargs)
         context.update(self.get_results(context['query'], context['current_version']))
         
-        if context['found_count']:
+        if 'found_count' in context:
             context['item'] = context['items'][0]
+            context['item_descndants'] = context['item'].get_descendants(include_self=True)
 
         return context
 
 
 class ItemView(BaseLiveView):
-    @method_decorator(render_to('livedocs/item.html'))
+    @method_decorator(render_to('livedocs/search.html'))
     def get(self, request, *args, **kwargs):
         """ Documentation page"""
 
         context = self.get_context(request, *args, **kwargs)
         context['item'] = get_object_or_404(Item, path=kwargs['item_path'])
+        context['item_descndants'] = context['item'].get_descendants(include_self=True)
         context.update(self.get_results(context['query'], context['current_version'], context['item']))
 
         return context

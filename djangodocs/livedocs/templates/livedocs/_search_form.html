@@ -9,7 +9,7 @@
         <nav class="b-version">
             {% for version in avaliable_versions %}
                 <a class="b-version__link
-                   g-systemlink{% if version.selected %} b-version__link_active{% endif %}"
+                   g-systemlink{% if version.active %} b-version__link_active{% endif %}"
                    href="{{ version.url }}">{{ version }}</a>
             {% endfor %}
         </nav>
