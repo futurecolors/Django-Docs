@@ -11,7 +11,7 @@
             {% for version in avaliable_versions %}
                 <a class="b-version__link js-ajax
                    g-systemlink{% if version.active %} b-version__link_active{% endif %}"
-                   href="{{ version.url }}{% if query %}?{{ query }}{% endif %}">{{ version }}</a>
+                   href="{{ version.url }}{% if query %}?query={{ query }}{% endif %}">{{ version }}</a>
             {% endfor %}
         </nav>
     </div>
