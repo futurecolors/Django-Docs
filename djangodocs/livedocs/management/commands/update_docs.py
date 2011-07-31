@@ -68,9 +68,9 @@ class Command(BaseCommand):
                 self.version = Version(name=options['ver'], is_default=options['default'])
                 self.version.save()
 
-#            if not options['only_parse']:
-#                self._download_docs()
-#                self._make_html()
+            if not options['only_parse']:
+                self._download_docs()
+                self._make_html()
             self._parse_html_and_update_db()
 
 
@@ -118,12 +118,19 @@ class Command(BaseCommand):
 
         parent_element_classes = parent_element.attrib.get('class', '').split(' ')
 
+        # Construct Item
         section = Item(version=self.version)
         section.content = ''
-        if parent_section:
-            section.parent = parent_section
         if hasattr(parent_element, 'is_root'):
             section.is_root = parent_element.is_root
+        if parent_section:
+            parent_ancestors = [parent_section] + list(parent_section.get_ancestors(ascending=True))
+            for item in parent_ancestors:
+                if item.is_root:
+                    section.parent = item
+                    break
+            if not section.parent:
+                section.parent = parent_section
 
         subitems = []
         anchors = [] + additional_anchors
