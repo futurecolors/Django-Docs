@@ -71,9 +71,11 @@ class BaseLiveView(View):
             sphinx_result = SphinxQuerySet(index='items').query(query)
             result_items_list = [r for r in sphinx_result if r.version == version]
             items = result_items_list[:LIMIT_RESULTS]
+            found_count = len(items)
         except SearchError:
             items = Item.objects.filter(Q(version=version),
                                 Q(title__icontains=query) | Q(content__icontains=query))[:LIMIT_RESULTS]
+            found_count = items.count()
 
         for item in items:
             if item == selected_item or not selected_item:
@@ -81,7 +83,7 @@ class BaseLiveView(View):
                 break
 
         return {'items': items,
-                'found_count': items.count()}
+                'found_count': found_count}
 
     
 class IndexView(TemplateView):
