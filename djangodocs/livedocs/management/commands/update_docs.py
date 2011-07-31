@@ -201,24 +201,25 @@ class Command(BaseCommand):
         """ Replace links concern many anchors """
         print 'Replace links ...'
 
-        count = [0, 0]
-
         def replacer(match):
-            link = match.groups()[0].strip('#')
+            link_parts = match.groups()[0].split('#')
+            link = link_parts[1] if len(link_parts) > 1 else link_parts[0]
             anchors = ItemAnchor.objects.filter(name=link, item__version=self.version)
             if anchors:
-                count[0] += 1
                 new_link = anchors[0].item.get_absolute_url()
                 return 'href="{0}"'.format(new_link)
             else:
-                count[1] += 1
-                return ''
+                items = Item.objects.filter(content__contains='id="{0}"'.format(link),
+                                            version=self.version)
+                if items:
+                    new_link = '{0}#{1}'.format(items[0].get_absolute_url(), link)
+                    return 'href="{0}"'.format(new_link)
+                else:
+                    return ''
 
         for section in Item.objects.all():
             section.content = re.sub(r'href="([#\w\.]+)"', replacer, section.content)
             section.save()
-
-        print count
 
 
 
