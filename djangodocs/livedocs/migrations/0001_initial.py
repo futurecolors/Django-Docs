@@ -19,7 +19,7 @@ class Migration(SchemaMigration):
         # Adding model 'Item'
         db.create_table('livedocs_item', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=500, db_index=True)),
+            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=200, db_index=True)),
             ('path', self.gf('django.db.models.fields.CharField')(max_length=500)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=500)),
             ('content', self.gf('django.db.models.fields.TextField')()),
@@ -65,7 +65,7 @@ class Migration(SchemaMigration):
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'children'", 'null': 'True', 'to': "orm['livedocs.Item']"}),
             'path': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '500', 'db_index': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '200', 'db_index': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'version': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['livedocs.Version']"})

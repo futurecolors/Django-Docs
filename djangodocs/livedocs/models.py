@@ -17,7 +17,7 @@ class Version(models.Model):
 
 
 class Item(MPTTModel, models.Model):
-    slug = models.SlugField('Slug', max_length=500)
+    slug = models.SlugField('Slug', max_length=200)
     path = models.CharField('Path in docs', max_length=500)
     title = models.CharField('Title', max_length=500)
     content = models.TextField('Content')
