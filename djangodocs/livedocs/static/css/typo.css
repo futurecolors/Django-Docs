@@ -75,6 +75,9 @@
     line-height: 1.4;
     font-size: 140%;
 }
+.b-content li * {
+    font-size: 100%!important;
+}
 .b-content .highlight-python,
 .b-content .highlight-html,
 .b-content .highlight {
