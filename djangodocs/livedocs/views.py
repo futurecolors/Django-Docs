@@ -123,7 +123,7 @@ class ItemView(BaseLiveView):
         """ Documentation page"""
 
         context = self.get_context(request, *args, **kwargs)
-        context['item'] = get_object_or_404(Item, path=kwargs['item_path'])
+        context['item'] = get_object_or_404(Item, path=kwargs['item_path'], version__name=context['current_version'])
         context['document_items'] = context['item'].get_document_nodes()
         context.update(self.get_results(context['query'], context['current_version'], context['item']))
 

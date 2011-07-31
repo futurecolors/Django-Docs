@@ -24,5 +24,7 @@
 
 
 {% block dashboard %}
-    {% dashboard %}
+    {% if not query %}
+        {% dashboard %}
+    {% endif %}
 {% endblock %}

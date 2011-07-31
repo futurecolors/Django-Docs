@@ -7,7 +7,7 @@
         {% recursetree toc %}
             <li class="b-contents__item">
                 {% if node == item %}
-                    {{ node.title }}
+                    <span class="b-contents__link">{{ node.title }}</span>
                 {% else %}
                     <a class="b-contents__link"
                        href="#{{ node.get_absolute_url }}{% if query %}?query={{ query }}{% endif %}">
