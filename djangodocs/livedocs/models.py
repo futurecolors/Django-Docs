@@ -36,3 +36,12 @@ class Item(MPTTModel, models.Model):
     class Meta:
         verbose_name = 'Content'
         verbose_name_plural = 'Content'
+
+
+class ItemAnchor(models.Model):
+    name = models.CharField('Content section anchor name', max_length=1000)
+    item = models.ForeignKey(Item)
+
+    class Meta:
+        verbose_name = 'Item anchor'
+        verbose_name_plural = 'Item anchors'

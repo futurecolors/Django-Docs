@@ -8,7 +8,7 @@ from settings import ROOT_PATH
 import lxml.html
 from lxml import etree
 from pyquery import PyQuery as pq
-from livedocs.models import Item
+from livedocs.models import Item, ItemAnchor
 from livedocs.models import Version
 
 
@@ -106,6 +106,8 @@ class Command(BaseCommand):
 
     def parse_section(self, parent_element, parent_section=None):
         """ Parsing section """
+
+        xxx = parent_element.attrib.get('id', '') == 's-module-django.contrib.gis.admin'
             
         section = Item(version=self.version)
         section.content = ''
@@ -113,9 +115,12 @@ class Command(BaseCommand):
             section.parent = parent_section
 
         subitems = []
+        anchors = []
 
         # Iterating over child nodes
         for children_element in parent_element:
+            if xxx:
+                print children_element
                 
             # Do we have any subsections?
             children_element_classes = set(children_element.attrib.get('class', '').split(' '))
@@ -130,15 +135,26 @@ class Command(BaseCommand):
                 if children_element.tag in self.HEADER_TAGS:
                     section.title = children_element.text or ''
                 elif children_element.tag == 'span' and not children_element.text:
-                    section.slug = children_element.attrib['id']
+                    anchors.append(children_element.attrib['id'])
                 else:
                     section.content += lxml.html.tostring(children_element)
 
         is_section_empty = not section.title
 
+        # Save Item if it isn't empty
         if not is_section_empty or not parent_section:
+            if anchors:
+                anchors.sort(key=lambda a: len(a))
+                section.slug = anchors[0]
             section.save()
 
+            # save anchors
+            for anchor in anchors:
+                ItemAnchor(name=anchor, item=section).save()
+
+        if is_section_empty:
+            if len(subitems) != len(anchors):
+                print anchors
         for item in subitems:
             if is_section_empty:
                 if parent_section:
