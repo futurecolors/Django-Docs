@@ -216,7 +216,7 @@ class Command(BaseCommand):
 
     def import_images(self, document):
         """Copy images to static root and fix img src"""
-        SRC = os.path.join(ROOT_PATH, 'data/_build/singlehtml/_images')
+        SRC = os.path.join(ROOT_PATH, self.LOCAL_PATH, '_build/singlehtml/_images')
         DST = os.path.join(STATIC_ROOT)
         args = ['cp', SRC, DST, '-R']
         subprocess.call(args)
