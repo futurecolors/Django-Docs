@@ -11,6 +11,11 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
+    # Static
+    (r'^(favicon.ico)$', 'django.views.static.serve', {'document_root': STATIC_ROOT}),
+    (r'^(robots.txt)$', 'django.views.static.serve', {'document_root': STATIC_ROOT}),
+    (r'^(humans.txt)$', 'django.views.static.serve', {'document_root': STATIC_ROOT}),
+
     url(r'^$', RedirectToDefaultVersionView.as_view()),
     url(r'^admin/', include(admin.site.urls)),
     url(r'(?P<current_version>[^/]+?)/', include('livedocs.urls')),
