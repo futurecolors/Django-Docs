@@ -89,6 +89,8 @@ class Command(BaseCommand):
         """ Download latest docs from svn repository """
         print 'Downloading {0} docs...'.format(self.version.name)
 
+        args = ['rm', '-rf', os.path.join(ROOT_PATH, self.LOCAL_PATH, '*')]
+        subprocess.call(args)
         svn_url = self.SVN_TRUNK if self.version.name == 'dev' else self.SVN_TAG.format(self.version.name)
         args = ['svn', 'co', os.path.join(svn_url, self.PATH_TO_DOCS), self.LOCAL_PATH]
         subprocess.call(args)
@@ -99,7 +101,7 @@ class Command(BaseCommand):
         print 'Print processing RST...'
 
         args = ['make', 'singlehtml']
-        subprocess.call(args, cwd = self.LOCAL_PATH)
+        subprocess.call(args, cwd = os.path.join(ROOT_PATH, self.LOCAL_PATH))
 
 
     def _parse_html_and_update_db(self):
