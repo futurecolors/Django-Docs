@@ -30,6 +30,8 @@ app.router = (function () {
         }
         if ($('#'+ lastId).length) {
             $.scrollTo($('#'+ lastId), {offset:{ top:-100}});
+        } else {
+            $.scrollTo(0);
         }
     }
     
