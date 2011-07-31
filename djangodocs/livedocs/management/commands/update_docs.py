@@ -39,7 +39,7 @@ class Command(BaseCommand):
         make_option('--default',
                     action='store_true',
                     dest='default',
-                    default=True,
+                    default=False,
                     help='Is default version'),
         make_option('--only-parse',
                     action='store_true',

@@ -1,26 +1,21 @@
 {% extends 'livedocs/layout/layout.html' %}
-
-
 {% load mptt_tags %}
-
 
 {% block title %} {{ title|striptags }} {% endblock %}
 
-
 {% block content %}
     <section class="l-content b-content">
-        {% if item_descendants %}
-        {% recursetree item_descendants %}
-            <h1>{{ node.title }}</h1>
-            {{ node.content|safe }}
-            {% if not node.is_leaf_node %}
-                {{ children }}
-            {% endif %}
-        {% endrecursetree %}
+    {% if item_descendants %}
+    {% recursetree item_descendants %}
+        <h1>{{ node.title }}</h1>
+        {{ node.content|safe }}
+        {% if not node.is_leaf_node %}
+            {{ children }}
         {% endif %}
-    </section>
+    {% endrecursetree %}
+    {% endif %}
+    </section>    
 {% endblock %}
-
 
 {% block dashboard %}
     {% comment %}
