@@ -103,7 +103,6 @@ class Command(BaseCommand):
         self.parse_section(content)
         self.create_paths()
 
-
     def parse_section(self, parent_element, parent_section=None):
         """ Parsing section """
 
@@ -133,8 +132,8 @@ class Command(BaseCommand):
 
                 # Filling section
                 if children_element.tag in self.HEADER_TAGS:
-                    section.title = children_element.text or ''
-                elif children_element.tag == 'span' and not children_element.text:
+                    section.title = children_element.text_content().encode('utf8') or None
+                elif children_element.tag == 'span' and not children_element.text_content():
                     anchors.append(children_element.attrib['id'])
                 else:
                     section.content += lxml.html.tostring(children_element)
