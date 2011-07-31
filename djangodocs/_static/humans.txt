@@ -7,7 +7,9 @@ Pavel Vorob'ev
 
 /* Site */
 Fancy django documentation with live search.
-Under the hood: Django Framework and twice Sphinx.
+Under the hood:
+HTML5, BEM (https://github.com/bem/bem-method), CSS3, jQuery,
+Django Framework, MySQL and twice Sphinx (http://sphinx.pocoo.org/ and http://sphinxsearch.com/).
 
 /* Thanks */
 Organizers of the Django Dash (http://djangodash.com/).
