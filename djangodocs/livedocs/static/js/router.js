@@ -24,6 +24,10 @@ app.router = (function () {
     function scrollContent(newHash) {
         var parts = newHash.split('/');
         var lastId = parts[parts.length-2];
+        if ($('#'+ lastId).length == 0 && $('.b-results__link').length) {
+            var parts = $('.b-results__link').attr('href').split('/');
+            var lastId = parts[parts.length-2];
+        }
         if ($('#'+ lastId).length) {
             $.scrollTo($('#'+ lastId), {offset:{ top:-100}});
         }
