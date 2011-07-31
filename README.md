@@ -39,16 +39,16 @@ python manage.py update_docs --ver=1.3 --default
 ```
 apt-get install sphinxsearch
 ```
-9. Create config for Sphinx (copy output to /etc/sphinx/sphinx.conf):
+10. Create config for Sphinx (copy output to /etc/sphinx/sphinx.conf):
 ```
 python manage.py generate_sphinx_config livedocs
-```
-10. Start Sphinx (for Debian):
-```
-/etc/init.d/sphinxsearch start
 ```
 11. Create indexes:
 ```
 indexer --all --rotate
 ```
-10. ```python manage.py runserver``` and go to http://127.0.0.1:8000
+12. Start Sphinx (for Debian):
+```
+/etc/init.d/sphinxsearch start
+```
+13. ```python manage.py runserver``` and go to http://127.0.0.1:8000
