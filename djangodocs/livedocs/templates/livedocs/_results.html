@@ -1,0 +1,23 @@
+{% if found_count %}
+    <h1 class="b-results__header">
+        Search results
+        ({{ found_count }})
+    </h1>
+
+    <nav class="b-results__nav">
+        {% for item in items %}
+        <article class="b-results__item{% if item.active %} b-results__item_active{% endif %}">
+            <div class="b-results__breadcrumbs">
+                {% for crumb in item.get_breadcrumbs %}
+                <span class="b-results__breadcrumbs-item">{{ crumb.title }}</span>
+                {% if not forloop.last %}
+                    <span class="b-results__breadcrumbs-separator">></span>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <a class="b-results__link" href="{{ item.get_absolute_url }}?query={{ query }}">{{ item.title }}</a>
+        </article>
+        {% endfor %}
+    </nav>
+{% endif %}
+

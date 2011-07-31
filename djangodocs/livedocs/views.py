@@ -7,6 +7,7 @@ from django.views.generic.base import View, RedirectView
 from forms import SearchForm
 from models import Item, Version
 
+LIMIT_RESULTS = 10
 
 class RedirectToDefaultVersionView(RedirectView):
     def get_redirect_url(self, **kwargs):
@@ -36,6 +37,20 @@ class BaseLiveView(View):
                 'current_version': kwargs['current_version'],
                 'avaliable_versions': avaliable_versions}
 
+    def get_results(self, query, current_version, selected_item=None):
+        if not query:
+            return {}
+            
+        items = Item.objects.filter(Q(version__name=current_version),
+                            Q(title__icontains=query) | Q(content__icontains=query))[:LIMIT_RESULTS]
+
+        for item in items:
+            if item == selected_item or not selected_item:
+                item.active = True
+                break
+
+        return {'items': items,
+                'found_count': items.count()}
     
 class SearchView(BaseLiveView):
     @method_decorator(render_to('livedocs/search.html'))
@@ -43,13 +58,10 @@ class SearchView(BaseLiveView):
         """ Backend url for searching items"""
 
         context = self.get_context(request, *args, **kwargs)
-
-        if context['query']:
-            context['items'] = Item.objects.filter(Q(version__name=context['current_version']),
-                                Q(title__icontains=context['query']) | Q(content__icontains=context['query']))[:10]
-            context['found_count'] = context['items'].count()
-            if context['found_count']:
-                context['item'] = context['items'][0]
+        context.update(self.get_results(context['query'], context['current_version']))
+        
+        if context['found_count']:
+            context['item'] = context['items'][0]
 
         return context
 
@@ -61,5 +73,6 @@ class ItemView(BaseLiveView):
 
         context = self.get_context(request, *args, **kwargs)
         context['item'] = get_object_or_404(Item, path=kwargs['item_path'])
+        context.update(self.get_results(context['query'], context['current_version'], context['item']))
 
         return context
