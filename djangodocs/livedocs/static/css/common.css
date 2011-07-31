@@ -62,18 +62,25 @@ body {
  * @subsection  Link styles
  */
 
-a {
+.ie a,
+a[href] {
     color: #0d35e1;
 }
-a:visited {
+.ie a:visited,
+a[href]:visited {
     color: #5517e0;
 }
-a:active,
-a:hover {
+.ie a:active,
+a[href]:active,
+.ie a:hover,
+a[href]:hover {
     color: #cf0202;
 }
-.g-systemlink:visited,
-.g-systemlink:active,
-.g-systemlink:hover {
+.ie .g-systemlink:visited,
+.g-systemlink[href]:visited,
+.ie .g-systemlink:active,
+.g-systemlink[href]:active,
+.ie .g-systemlink:hover,
+.g-systemlink[href]:hover {
     color: #0d35e1;
 }

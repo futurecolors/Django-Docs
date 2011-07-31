@@ -93,9 +93,7 @@
  * @subsection  Heghlight
  */
 
-.b-content .highlight-python,
-.b-content .highlight-html,
-.b-content .highlight {
+.b-content pre {
     margin: -0.5em -0.5em 1.04em;
     padding:  0.5em;
     line-height: 1.42;
@@ -104,22 +102,10 @@
     background: #f0f6dc;
     overflow-x: auto;
 }
-.b-content .highlight-html {
+.b-content .highlight-html pre {
     background: #e2eef6;
 }
-.b-content .highlight-python:hover,
-.b-content .highlight-html:hover,
-.b-content .highlight:hover {
-    overflow-x: auto;
-}
-.b-content .highlight-python .highlight,
-.b-content .highlight-html .highlight {
-    font-size: 100%;
-    overflow: visible;
-}
-.m-search-focus .b-content .highlight-python,
-.m-search-focus .b-content .highlight-html,
-.m-search-focus .b-content .highlight {
+.m-search-focus .b-content pre {
     background: #fffff0;
 }
 

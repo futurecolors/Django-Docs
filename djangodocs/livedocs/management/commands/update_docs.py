@@ -208,6 +208,7 @@ class Command(BaseCommand):
 
         return anchors[0]
 
+    
     def prepare_section(self, section):
         section.title = section.title.replace('¶', '')
         section.content = section.content.replace('\n</pre>', '</pre>')
