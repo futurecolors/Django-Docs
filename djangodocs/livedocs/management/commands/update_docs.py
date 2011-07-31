@@ -257,7 +257,10 @@ class Command(BaseCommand):
                     new_link = '{0}#{1}'.format(items[0].get_absolute_url(), link)
                     return 'href="{0}"'.format(new_link)
                 else:
-                    return original_link
+                    if 'http://' in original_link:
+                        return 'href="{0}"'.format(original_link)
+                    else:
+                        return ''
 
         for section in Item.objects.all():
             section.content = re.sub(r'href="(.+)"', replacer, section.content)
