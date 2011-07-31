@@ -66,6 +66,12 @@
     font-size: 140%;
     background: #e2eef6;
 }
+.b-content .deprecated {
+    margin: 1.54em 0px;
+    line-height: 1.4;
+    font-size: 140%;
+    color: #533;
+}
 
 
 /**
