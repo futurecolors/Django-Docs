@@ -109,7 +109,8 @@ class SearchView(BaseLiveView):
             context['title'] = 'Search'
         elif context['found_count']:
             context['item'] = context['items'][0]
-            context['document_items'] = context['item'].get_document_nodes()
+            context['document_root'] = context['item'].get_document_node()
+            context['document_items'] = context['document_root'].get_descendants(include_self=True)
             context['title'] = context['item'].title
         else:
             context['title'] = 'No results'
@@ -124,7 +125,8 @@ class ItemView(BaseLiveView):
 
         context = self.get_context(request, *args, **kwargs)
         context['item'] = get_object_or_404(Item, path=kwargs['item_path'], version__name=context['current_version'])
-        context['document_items'] = context['item'].get_document_nodes()
+        context['document_root'] = context['item'].get_document_node()
+        context['document_items'] = context['document_root'].get_descendants(include_self=True)
         context.update(self.get_results(context['query'], context['current_version'], context['item']))
 
         return context

@@ -39,12 +39,12 @@ class Item(MPTTModel, models.Model):
     def get_breadcrumbs(self):
         return self.get_ancestors().filter(level__gte=3)
 
-    def get_document_nodes(self):
+    def get_document_node(self):
         ancestors = [self] + list(self.get_ancestors(ascending=True))
         for node in ancestors:
             if node.is_root:
-                return node.get_descendants(include_self=True)
-        return self.get_descendants(include_self=True)
+                return node
+        return self
 
     class Meta:
         verbose_name = 'Content'

@@ -3,6 +3,7 @@
 
 {% load mptt_tags %}
 {% load dashboard %}
+{% load item_header %}
 
 
 {% block title %} {{ title|striptags }} {% endblock %}
@@ -12,14 +13,14 @@
     <section class="l-content b-content">
     {% if document_items %}
     {% recursetree document_items %}
-        <h1 id="{{ node.slug }}">{{ node.title }}</h1>
+        <h{{ node|get_header:document_root }} id="{{ node.slug }}">{{ node.title }}</h{{ node|get_header:document_root }}>
         {{ node.content|safe }}
         {% if not node.is_leaf_node %}
             {{ children }}
         {% endif %}
     {% endrecursetree %}
     {% endif %}
-    </section>    
+    </section>
 {% endblock %}
 
 
