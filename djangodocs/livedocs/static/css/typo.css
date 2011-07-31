@@ -16,6 +16,9 @@
     margin: 0px 25%;
 }
 .b-content {}
+.b-content .headerlink {
+    display: none;
+}
 
 
 /**
