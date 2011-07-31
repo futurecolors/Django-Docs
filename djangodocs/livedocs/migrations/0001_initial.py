@@ -19,9 +19,9 @@ class Migration(SchemaMigration):
         # Adding model 'Item'
         db.create_table('livedocs_item', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=1000, db_index=True)),
-            ('path', self.gf('django.db.models.fields.CharField')(max_length=1000)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=1000)),
+            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=500, db_index=True)),
+            ('path', self.gf('django.db.models.fields.CharField')(max_length=500)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=500)),
             ('content', self.gf('django.db.models.fields.TextField')()),
             ('parent', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='children', null=True, to=orm['livedocs.Item'])),
             ('version', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['livedocs.Version'])),
@@ -36,7 +36,7 @@ class Migration(SchemaMigration):
         # Adding model 'ItemAnchor'
         db.create_table('livedocs_itemanchor', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=1000)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=500)),
             ('item', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['livedocs.Item'])),
         ))
         db.send_create_signal('livedocs', ['ItemAnchor'])
@@ -63,10 +63,10 @@ class Migration(SchemaMigration):
             'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'children'", 'null': 'True', 'to': "orm['livedocs.Item']"}),
-            'path': ('django.db.models.fields.CharField', [], {'max_length': '1000'}),
+            'path': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '1000', 'db_index': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '1000'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '500', 'db_index': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'version': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['livedocs.Version']"})
         },
@@ -74,7 +74,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'ItemAnchor'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'item': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['livedocs.Item']"}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '1000'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '500'})
         },
         'livedocs.version': {
             'Meta': {'object_name': 'Version'},
