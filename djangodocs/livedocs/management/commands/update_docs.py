@@ -153,13 +153,13 @@ class Command(BaseCommand):
 
                 # Filling section
                 if children_element.tag in self.HEADER_TAGS:
-                    title_content = children_element.text_content().encode('utf8')
-                    section.title = title_content.replace('¶', '')
+                    section.title = children_element.text_content().encode('utf8')
                 elif children_element.tag == 'span' and not children_element.text_content():
                     anchors.append(children_element.attrib['id'])
                 else:
                     section.content += lxml.html.tostring(children_element)
 
+        self.prepare_section(section)
         is_section_empty = not section.title
 
         # Save Item if it isn't empty
@@ -203,6 +203,10 @@ class Command(BaseCommand):
                         return a
 
         return anchors[0]
+
+    def prepare_section(self, section):
+        section.title = section.title.replace('¶', '')
+        section.content.replace('\n</pre>', '</pre>')
 
 
     def import_images(self):
