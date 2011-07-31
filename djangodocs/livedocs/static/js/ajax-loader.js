@@ -1,20 +1,24 @@
 $(function(){
     var loaderAnimation = false;
+    var position = 0;
 
     $('.js-ajax-loader')
-        .bind('start', function(){
+        .live('start', function(){
             loaderAnimation = true;
             animateLoader($(this).show());
         })
-        .bind('stop', function(){
+        .live('stop', function(){
             loaderAnimation = false;
             $(this).hide();
         });
 
     function animateLoader($loader) {
         if (loaderAnimation) {
-            var position = $loader.css('backgroundPositionX');
-            $loader.css('backgroundPositionX', position + 30);
+            position += 30;
+            if (position > 2000) {
+                position = 0;
+            }
+            $loader.css('backgroundPosition', '-' + position + 'px 0px');
             setTimeout(function(){animateLoader($loader)}, 40);
         }
     }

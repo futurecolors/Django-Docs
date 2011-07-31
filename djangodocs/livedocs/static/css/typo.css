@@ -87,7 +87,7 @@
     font-size: 140%;
     font-family: courier;
     background: #f0f6dc;
-    overflow-x: hidden;
+    overflow-x: auto;
 }
 .b-content .highlight-html {
     background: #e2eef6;
@@ -131,6 +131,15 @@
 }
 .b-content .versionadded a {
     color: #11721a!important;
+}
+.b-content .admonition {
+    padding-left: 60px;
+    background: url(../images/warning.png) 0px 0px no-repeat;
+}
+.b-content .admonition-title {
+    margin-bottom: -0.2em;
+    padding-top: 0.7em;
+    font-weight: bolder;
 }
 
 
