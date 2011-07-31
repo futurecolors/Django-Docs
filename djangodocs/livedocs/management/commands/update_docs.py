@@ -107,6 +107,7 @@ class Command(BaseCommand):
         content = document.get_element_by_id('contents')
 
         print 'Updating db...'
+        
         self.parse_section(content)
         self.create_paths()
         self.replace_links()
@@ -151,11 +152,10 @@ class Command(BaseCommand):
         # Save Item if it isn't empty
         if not is_section_empty or not parent_section:
             if anchors:
-                anchors.sort(key=lambda a: len(a))
-                section.slug = anchors[0]
+                section.slug = self.get_slug(anchors)
             section.save()
 
-            # save anchors
+            # Save anchors
             for anchor in anchors:
                 ItemAnchor(name=anchor, item=section).save()
 
@@ -178,6 +178,18 @@ class Command(BaseCommand):
 
             self.parse_section(item, parent_for_item,
                                additional_anchors=subsection_additional_anchors)
+
+
+    def get_slug(self, anchors):
+        # Get good anchor for slug
+        if len(anchors) > 1:
+            anchors_without_ids = [a for a in anchors if not re.match(r'id\d+', a)]
+            if anchors_without_ids:
+                for a in anchors_without_ids:
+                    if not '-' in a:
+                        return a
+
+        return anchors[0]
 
 
     def import_images(self):
