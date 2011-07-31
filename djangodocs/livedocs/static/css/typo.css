@@ -143,12 +143,14 @@
  * @subsection  Version added
  */
 
-.b-content .versionadded {
+.b-content .versionadded,
+.b-content .versionchanged {
     font-size: 120%;
     font-style: italic;
     color: #11721a;
 }
-.b-content .versionadded a {
+.b-content .versionadded a,
+.b-content .versionchanged a {
     color: #11721a!important;
 }
 
