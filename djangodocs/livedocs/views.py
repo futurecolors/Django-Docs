@@ -9,7 +9,8 @@ from djangosphinx.models import SphinxQuerySet, SearchError
 from forms import SearchForm
 from models import Item, Version
 
-LIMIT_RESULTS = 10
+
+LIMIT_RESULTS = 5
 
 
 def ajax_headers(view_func):
