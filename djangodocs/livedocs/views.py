@@ -3,9 +3,15 @@ from django.core.urlresolvers import resolve, reverse
 from django.db.models.query_utils import Q
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
-from django.views.generic.base import View
+from django.views.generic.base import View, RedirectView
 from forms import SearchForm
 from models import Item, Version
+
+
+class RedirectToDefaultVersionView(RedirectView):
+    def get_redirect_url(self, **kwargs):
+        version = Version.objects.get(is_default=True)
+        return reverse('search', kwargs={'current_version': version.name})
 
 
 class BaseLiveView(View):
