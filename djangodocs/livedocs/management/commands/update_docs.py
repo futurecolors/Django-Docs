@@ -116,10 +116,14 @@ class Command(BaseCommand):
     def parse_section(self, parent_element, parent_section=None, additional_anchors=[]):
         """ Parsing section """
 
+        parent_element_classes = parent_element.attrib.get('class', '').split(' ')
+
         section = Item(version=self.version)
         section.content = ''
         if parent_section:
             section.parent = parent_section
+        if hasattr(parent_element, 'is_root'):
+            section.is_root = parent_element.is_root
 
         subitems = []
         anchors = [] + additional_anchors
@@ -133,6 +137,8 @@ class Command(BaseCommand):
             
             if self.SUB_ITEMS_CLASSES & children_element_classes:
 
+                if 'compound' in parent_element_classes:
+                    children_element.is_root = True
                 subitems.append(children_element)
                 section_elements_anchors.append(children_element.attrib.get('id', None))
 

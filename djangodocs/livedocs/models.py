@@ -22,6 +22,7 @@ class Item(MPTTModel, models.Model):
     content = models.TextField('Content')
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children', verbose_name=u'Parent')
     version = models.ForeignKey(Version)
+    is_root = models.BooleanField('Is root page', default=False)
 
     def __unicode__(self):
         return self.slug
