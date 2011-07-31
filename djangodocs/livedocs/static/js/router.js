@@ -44,6 +44,7 @@ app.router = (function () {
                     }
                     var parts = newHash.split('/');
                     var lastId = parts[parts.length-2];
+                    console.log(lastId);
                     $.scrollTo($('#'+ lastId), {offset:{ top:-100}});
                     router.redrawSearch = true;
                 }

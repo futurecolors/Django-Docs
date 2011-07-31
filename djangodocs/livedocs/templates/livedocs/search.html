@@ -5,9 +5,9 @@
 
 {% block content %}
     <section class="l-content b-content">
-    {% if item_descendants %}
-    {% recursetree item_descendants %}
-        <h1>{{ node.title }}</h1>
+    {% if document_items %}
+    {% recursetree document_items %}
+        <h1 id="{{ node.slug }}">{{ node.title }}</h1>
         {{ node.content|safe }}
         {% if not node.is_leaf_node %}
             {{ children }}
