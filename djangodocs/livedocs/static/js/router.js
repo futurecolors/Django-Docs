@@ -37,6 +37,7 @@ app.router = (function () {
 
         var newHash = event.fragment;
         if (!(oldHash === null && newHash == '')) {
+            $('.js-ajax-loader').trigger('start');
             $.ajax({
                 url: newHash,
                 dataType: 'html',
@@ -52,6 +53,7 @@ app.router = (function () {
                     }
                     scrollContent(newHash)
                     router.redrawSearch = true;
+                    $('.js-ajax-loader').trigger('stop');
                 }
             });
         }
